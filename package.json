@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "install": "npm run install-client",
+
+    "install-client": "cd client && npm install && bower install",
+    "client-server": "cd client && npm run dev-server"
+  }
+}
