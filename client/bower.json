@@ -1,0 +1,6 @@
+{
+  "name": "es6-template",
+  "dependencies": {
+    "lodash": "~3.4.0"
+  }
+}

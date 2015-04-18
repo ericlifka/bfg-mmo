@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "broccoli": "^0.15.0",
+    "broccoli-babel-transpiler": "^4.0.1",
+    "broccoli-concat": "0.0.12",
+    "broccoli-fast-browserify": "^0.2.5",
+    "broccoli-less-single": "^0.2.0",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-static-compiler": "^0.2.1"
+  }
+}
