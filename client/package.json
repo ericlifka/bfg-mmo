@@ -1,4 +1,8 @@
 {
+  "name": "bfg-mmo-client",
+  "description": "Best Friends Gang MMO - client application",
+  "repository": "https://github.com/ericlifka/bfg-mmo.git",
+  "private": true,
   "devDependencies": {
     "broccoli": "^0.15.0",
     "broccoli-babel-transpiler": "^4.0.1",

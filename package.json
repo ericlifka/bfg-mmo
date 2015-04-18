@@ -1,7 +1,33 @@
 {
+  "name": "bfg-mmo",
+  "description": "Best Friends Gang MMO",
+  "repository": "https://github.com/ericlifka/bfg-mmo.git",
+  "version": "0.0.1",
+  "private": true,
+  "contributors": [
+    {
+      "name": "Dennis Crenshaw",
+      "email": "crenshawda@gmail.com",
+      "url": "https://github.com/crenshawda"
+    },
+    {
+      "name": "Eric Lifka",
+      "email": "eric.lifka@gmail.com",
+      "url": "https://github.com/ericlifka"
+    },
+    {
+      "name": "Jesse Kolbert",
+      "email": "krumble@gmail.com",
+      "url": "https://github.com/jeskol"
+    },
+    {
+      "name": "Walter C. Reel III",
+      "email": "waltercreel3rd@gmail.com",
+      "url": "https://github.com/WalterCReel3"
+    }
+  ],
   "scripts": {
     "install": "npm run install-client",
-
     "install-client": "cd client && npm install && bower install",
     "client-server": "cd client && npm run dev-server"
   }
