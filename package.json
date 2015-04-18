@@ -32,5 +32,8 @@
     "install-server": "cd server && npm install",
     "client": "cd client && npm run dev-server",
     "server": "cd server && npm run dev-server"
+  },
+  "devDependencies": {
+    "broccoli": "~0.16.0"
   }
 }
