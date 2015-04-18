@@ -1,6 +1,7 @@
 {
-  "name": "es6-template",
+  "name": "bfg-mmo-client",
   "dependencies": {
-    "lodash": "~3.4.0"
+    "lodash": "~3.4.0",
+    "pixi.js": "~2.2.9"
   }
 }

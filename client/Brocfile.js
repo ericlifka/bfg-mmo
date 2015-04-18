@@ -30,7 +30,8 @@ var vendorTree = pickFiles('bower_components', {
     srcDir: '.',
     destDir: '.',
     files: [
-        'lodash/lodash.js'
+        'lodash/lodash.js',
+        'pixi.js/bin/pixi.js'
     ]
 });
 
