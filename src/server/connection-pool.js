@@ -17,14 +17,11 @@ class ConnectionPool {
     newConnection(socket) {
         socket.on('authorize', ({username, password} = {}) => {
             if (!authenticate(username, password)) {
-                console.log('auth failed', username, password);
                 socket.emit('authorized', {
                     authorized: false
                 });
                 return;
             }
-
-            console.log('auth succeeded', username, password);
 
             this.connections[socket.id] = socket;
             this.addEventListeners(socket);
