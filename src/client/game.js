@@ -1,9 +1,13 @@
 import Input from './input'
 import Player from './player'
 
+const FIX_ME_SERVER_ADDRESS = "http://localhost:3000";
+
 class Game {
 
     constructor(viewport) {
+        this.socket = io(FIX_ME_SERVER_ADDRESS);
+
         this.player = null;
         this.viewport = viewport;
         this.assetPaths = [
