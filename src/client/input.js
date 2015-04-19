@@ -30,18 +30,24 @@
 //
 
 class Input {
-    constructor() {
+    constructor(stage) {
+        this.stage = stage;
         this.keyCache = {};
+        this.click = null;
         document.addEventListener('keydown', (event) => {
             this.keyCache[String.fromCharCode(event.keyCode)] = true;
         });
         document.addEventListener('keyup', (event) => {
             this.keyCache[String.fromCharCode(event.keyCode)] = false;
         });
+        this.stage.click = (event) => {
+            this.click = event.global;
+        };
     }
 
     clearCache() {
         this.keyCache = {};
+        this.click = null;
     }
 
     getFrameState() {
@@ -49,7 +55,8 @@ class Input {
             up: this.keyCache.W,
             left: this.keyCache.A,
             down: this.keyCache.S,
-            right: this.keyCache.D
+            right: this.keyCache.D,
+            primary: this.click
         };
     }
 }

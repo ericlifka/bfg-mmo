@@ -14,10 +14,11 @@ class Game {
             'sprites/wizard_girl.png'
         ];
         this.renderer = new PIXI.WebGLRenderer(1024, 576);
-        this.stage = new PIXI.Stage(0xdfdfdf);
+        let interactive = true;
+        this.stage = new PIXI.Stage(0xdfdfdf, interactive);
         this.viewport.appendChild(this.renderer.view);
 
-        this.input = new Input();
+        this.input = new Input(this.stage);
     }
 
     start() {
@@ -69,11 +70,14 @@ class Game {
         this.player.sprite.y = Math.round(this.player.position.y);
 
         this.renderer.render(this.stage);
+        // this.input.clearCache();
+        this.input.click = null;
     }
 
     elapsedSinceLastFrame() {
         let now = Date.now();
         let elapsed = now - this.lastTimeStamp;
+        this.lastTimeStamp = now;
         return elapsed;
     }
 }
