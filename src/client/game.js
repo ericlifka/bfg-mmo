@@ -1,9 +1,9 @@
 class Game {
     constructor() {
-        this.assetPaths = [ ];
+        this.assetPaths = [];
         console.log('The game was constructed');
-	console.log(PIXI);
+        console.log(PIXI);
     }
 }
 
-export default { Game }
+export default Game;
