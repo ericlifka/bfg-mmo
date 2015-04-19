@@ -1,14 +1,12 @@
-var pickFiles = require('broccoli-static-compiler');
+var funnel = require('broccoli-funnel');
 var babelTranspiler = require('broccoli-babel-transpiler');
 var fastBrowserify = require('broccoli-fast-browserify');
 var concat = require('broccoli-concat');
 var mergeTrees = require('broccoli-merge-trees');
 var compileLess = require('broccoli-less-single');
 
-var srcTree = pickFiles('app/src', {
-    files: ['**/*.js'],
-    srcDir: '.',
-    destDir: './src'
+var srcTree = funnel('./src', {
+    include: ['**/*.js']
 });
 
 var babelTree = babelTranspiler(srcTree, {
@@ -17,8 +15,8 @@ var babelTree = babelTranspiler(srcTree, {
 
 var browserifyTree = fastBrowserify(babelTree, {
     bundles: {
-        'app.js': {
-            entryPoints: ['./src/app.js']
+        'client-app.js': {
+            entryPoints: ['client-app.js']
         }
     },
     browserify: {
@@ -26,10 +24,8 @@ var browserifyTree = fastBrowserify(babelTree, {
     }
 });
 
-var vendorTree = pickFiles('bower_components', {
-    srcDir: '.',
-    destDir: '.',
-    files: [
+var vendorTree = funnel('bower_components', {
+    include: [
         'lodash/lodash.js',
         'pixi.js/bin/pixi.js'
     ]
@@ -45,12 +41,17 @@ var concatenatedVendor = concat(vendorTree, {
     wrapInFunction: false
 });
 
-var html = pickFiles('app', {
-    srcDir: '/',
-    destDir: '/',
-    files: ['index.html']
+var html = funnel('static', {
+    include: [
+        'index.html'
+    ]
 });
 
-var styles = compileLess(['app/styles'], 'app.less', 'app.css', {});
+var styles = compileLess(['./styles/'], 'app.less', 'app.css', {});
 
-module.exports = mergeTrees([html, styles, browserifyTree, concatenatedVendor]);
+module.exports = mergeTrees([
+    html,
+    styles,
+    browserifyTree,
+    concatenatedVendor
+]);

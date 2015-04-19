@@ -26,14 +26,14 @@
       "url": "https://github.com/WalterCReel3"
     }
   ],
-  "scripts": {
-    "install": "npm run install-client && npm run install-server",
-    "install-client": "cd client && npm install && bower install",
-    "install-server": "cd server && npm install",
-    "client": "cd client && npm run dev-server",
-    "server": "cd server && npm run dev-server"
-  },
+  "scripts": {},
   "devDependencies": {
-    "broccoli": "~0.16.0"
+    "broccoli": "~0.16.0",
+    "broccoli-babel-transpiler": "^4.0.1",
+    "broccoli-concat": "0.0.12",
+    "broccoli-fast-browserify": "^0.2.5",
+    "broccoli-funnel": "^0.2.3",
+    "broccoli-less-single": "^0.2.0",
+    "broccoli-merge-trees": "^0.2.1"
   }
 }
