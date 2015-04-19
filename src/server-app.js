@@ -1,5 +1,5 @@
 require('babel/register');
 
-var httpServer = require('./server/http-server.js');
+var socketServer = require('./server/socket-server.js');
 
-httpServer.start();
+socketServer.start();
