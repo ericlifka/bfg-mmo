@@ -1,9 +1,0 @@
-{
-  "name": "bfg-mmo-server",
-  "description": "Best Friends Gang MMO - server application",
-  "repository": "https://github.com/ericlifka/bfg-mmo.git",
-  "private": true,
-  "scripts": {
-    "dev-server": "node server.js"
-  }
-}
