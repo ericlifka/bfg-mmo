@@ -8,6 +8,10 @@ const socketServer = io(httpServer);
 
 socketServer.on('connection', function (socket) {
     console.log("a socket connected");
+    socket.on('client-event', function(data) {
+        var move = data['player-move'];
+        console.log("Received client event: " + move.x + ',' + move.y);
+    });
 });
 
 export var start = function () {
