@@ -6,7 +6,7 @@ An exploration in game design and haphazard collaboration.
 #### Dependencies
 ```
 $ npm install -g bower
-$ npm install -g broccoli
+$ npm install -g broccoli-cli
 $ npm install
 ```
 #### Run Server
