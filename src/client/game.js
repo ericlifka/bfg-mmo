@@ -8,6 +8,7 @@ class Game {
     constructor(viewport) {
         this.socket = io(FIX_ME_SERVER_ADDRESS);
 
+        this.namespace = 'game';
         this.player = null;
         this.viewport = viewport;
         this.assetPaths = [
@@ -18,7 +19,14 @@ class Game {
         this.stage = new PIXI.Stage(0xdfdfdf, interactive);
         this.viewport.appendChild(this.renderer.view);
 
+        this.socket = io.connect(this.socketConnectionString());
+
         this.input = new Input(this.stage);
+    }
+
+    socketConnectionString() {
+        // return '//' + document.domain + ':'  + '3000' + this.namespace;
+        return '//' + document.domain + ':'  + '3000';
     }
 
     start() {
@@ -46,7 +54,7 @@ class Game {
             image: 'sprites/wizard_girl.png'
         };
 
-        this.player = new Player(test_player_data);
+        this.player = new Player(this, test_player_data);
         this.stage.addChild(this.player.sprite);
     }
 
@@ -58,6 +66,10 @@ class Game {
 
         this.lastTimeStamp = Date.now();
         requestAnimationFrame(browserFrameHook);
+    }
+
+    sendEvent(payload) {
+        this.socket.emit('client-event', payload);
     }
 
     nextAnimationFrame() {

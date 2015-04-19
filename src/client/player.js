@@ -62,7 +62,8 @@ class Player {
     // Things to rack (as related to player entity)
     //   player state
 
-    constructor(data) {
+    constructor(game, data) {
+        this.game = game;
         this.sprite = null;
         this.position =  { x: 100, y: 100 };
         this.orientation = 0; // TODO: need enumarted cardinal directions
@@ -84,21 +85,30 @@ class Player {
     updatePosition(pos) {
         this.position.x = pos.x;
         this.position.y = pos.y;
+        this.game.sendEvent({'player-move': this.position});
     }
 
     update(timeRatio, inputState) {
         // Update
-        let velocity = this.getVelocity(timeRatio);
-        if (inputState.right) {
-            this.position.x += velocity;
-        } else if (inputState.left) {
-            this.position.x -= velocity;
-        }
+        if (inputState.right || inputState.left ||
+                inputState.up || inputState.down) {
+            // cancel ongoing move commands
+            let velocity = this.getVelocity(timeRatio);
+            let newX = this.position.x;
+            let newY = this.position.y;
+            this.moveCommand = null;
+            if (inputState.right) {
+                newX = this.position.x + velocity;
+            } else if (inputState.left) {
+                newX = this.position.x - velocity;
+            }
 
-        if (inputState.up) {
-            this.position.y -= velocity;
-        } else if (inputState.down) {
-            this.position.y += velocity;
+            if (inputState.up) {
+                newY = this.position.y - velocity;
+            } else if (inputState.down) {
+                newY = this.position.y + velocity;
+            }
+            this.updatePosition({x: newX, y: newY});
         }
 
         if (inputState.primary) {
