@@ -1,5 +1,6 @@
 {
   "name": "bfg-mmo-client",
+  "private": true,
   "dependencies": {
     "lodash": "~3.4.0",
     "pixi.js": "~2.2.9"
