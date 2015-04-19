@@ -38,6 +38,7 @@
   "devDependencies": {
     "broccoli": "~0.16.0",
     "broccoli-babel-transpiler": "^4.0.1",
+    "broccoli-cli": "^1.0.0",
     "broccoli-concat": "0.0.12",
     "broccoli-fast-browserify": "^0.2.5",
     "broccoli-funnel": "^0.2.3",
