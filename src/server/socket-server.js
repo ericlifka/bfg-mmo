@@ -8,14 +8,7 @@ const app = express();
 const httpServer = Server(app);
 const socketServer = io(httpServer);
 
-socketServer.on('connection', function (socket) {
-    ConnectionPool.newConnection(socket);
-    //console.log("a socket connected");
-    //socket.on('client-updates', function(data) {
-    //    var updates = data.updates;
-    //    console.log("client updates: " + JSON.stringify(updates));
-    //});
-});
+socketServer.on('connection', (socket) => ConnectionPool.newConnection(socket));
 
 export var start = function () {
     httpServer.listen(3000, function () {
