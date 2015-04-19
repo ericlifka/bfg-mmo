@@ -18,7 +18,7 @@ class ConnectionManager {
                     console.log('authorized', result);
                 });
 
-                this.socket.emit('authorize', {username: 'bob'});
+                this.socket.emit('authorize', {username: 'eric', password: '1234'});
             });
         }
 

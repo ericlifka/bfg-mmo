@@ -4,7 +4,10 @@ const LOL_USERS_TABLE = {
     "dennis": "1234",
     "jesse": "1234"
 };
-const authenticate = (username, password) => LOL_USERS_TABLE[username] === password;
+const authenticate = (username, password) => {
+    return LOL_USERS_TABLE.hasOwnProperty(username) &&
+        LOL_USERS_TABLE[username] === password;
+};
 
 class ConnectionPool {
     constructor() {
@@ -14,11 +17,14 @@ class ConnectionPool {
     newConnection(socket) {
         socket.on('authorize', ({username, password} = {}) => {
             if (!authenticate(username, password)) {
+                console.log('auth failed', username, password);
                 socket.emit('authorized', {
                     authorized: false
                 });
                 return;
             }
+
+            console.log('auth succeeded', username, password);
 
             this.connections[socket.id] = socket;
             this.addEventListeners(socket);
