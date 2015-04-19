@@ -1,18 +1,27 @@
-# bfg-mmo
+# Best Friend's Gang MMO exploration adventure
 
-## Install Dependencies
+## Setup
+
+### Dependencies
 ```
 $ npm install -g bower
 $ npm install -g broccoli
 $ npm install
 ```
 
-## Run Server
+### Run Server
 ```
 $ npm run server
 ```
 
-## Run Client
+### Run Client
 ```
 $ npm run client
 ```
+
+## Contributing
+
+### dependency management
+ - Client dependencies: `bower install --save <dependency>`
+ - Broccoli plugins: `npm install --save-dev <plugin>`
+ - Server dependencies: `npm install --save <dependency>`
