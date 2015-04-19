@@ -62,7 +62,9 @@ class Game {
 
     nextAnimationFrame() {
         let elapsed = this.elapsedSinceLastFrame();
+
         let inputState = this.input.getFrameState();
+
         this.player.update(elapsed, inputState);
 
         // Need a camera for world to screen translations
@@ -70,7 +72,6 @@ class Game {
         this.player.sprite.y = Math.round(this.player.position.y);
 
         this.renderer.render(this.stage);
-        // this.input.clearCache();
         this.input.click = null;
     }
 

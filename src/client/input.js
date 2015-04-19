@@ -40,8 +40,8 @@ class Input {
         document.addEventListener('keyup', (event) => {
             this.keyCache[String.fromCharCode(event.keyCode)] = false;
         });
-        this.stage.click = (event) => {
-            this.click = event.global;
+        this.stage.click = (interaction) => {
+            this.click = interaction.global;
         };
     }
 
