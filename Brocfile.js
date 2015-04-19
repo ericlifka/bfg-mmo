@@ -44,7 +44,8 @@ var concatenatedVendor = concat(vendorTree, {
 
 var html = funnel('static', {
     include: [
-        'index.html'
+        'index.html',
+        'sprites/*'
     ]
 });
 
