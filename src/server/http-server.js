@@ -1,10 +1,17 @@
-import http from 'http';
+import http from 'http'
+import express from 'express'
+import io from 'socket.io'
+
+const app = express();
+const httpServer = http.Server(app);
+const socketServer = io(httpServer);
+
+socketServer.on('connection', function (socket) {
+    console.log("a socket connected");
+});
 
 export var start = function () {
-    http.createServer((req, res) => {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end('Hello World\n');
-    }).listen(1337, '127.0.0.1');
-
-    console.log('Server running at http://127.0.0.1:1337/');
+    httpServer.listen(3000, function () {
+        console.log("listening on http://localhost:3000");
+    });
 };

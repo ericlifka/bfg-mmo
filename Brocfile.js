@@ -27,7 +27,8 @@ var browserifyTree = fastBrowserify(babelTree, {
 var vendorTree = funnel('bower_components', {
     include: [
         'lodash/lodash.js',
-        'pixi.js/bin/pixi.js'
+        'pixi.js/bin/pixi.js',
+        'socket.io-client/socket.io.js'
     ]
 });
 
