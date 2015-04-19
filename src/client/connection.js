@@ -2,7 +2,9 @@ const socketConnectionString = () => '//' + document.domain + ':'  + '3000';
 
 class ConnectionManager {
     constructor() {
+        this.queue = [];
         this.socket = null;
+        this.interval = null;
     }
 
     connect() {
@@ -11,10 +13,26 @@ class ConnectionManager {
         if (!this.socket) {
             this.socket = io(socketConnectionString());
         }
+
+        if (!this.interval) {
+            this.interval = window.setInterval(() => this.processQueue(), 100);
+        }
     }
 
-    sendEvent(payload) {
-        this.socket.emit('client-event', payload);
+    sendEvent(event, payload) {
+        this.queue.push({
+            [event]: payload
+        });
+        //this.socket.emit('client-event', payload);
+    }
+
+    processQueue() {
+        const toSend = this.queue;
+        this.queue = [];
+
+        this.socket.emit('client-updates', {
+            updates: toSend
+        });
     }
 }
 

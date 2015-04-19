@@ -88,7 +88,7 @@ class Player {
         this.position.x = pos.x;
         this.position.y = pos.y;
 
-        Connection.sendEvent({'player-move': this.position});
+        Connection.sendEvent('player-move', this.position);
     }
 
     update(timeRatio, inputState) {

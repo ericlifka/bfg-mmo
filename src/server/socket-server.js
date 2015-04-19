@@ -8,9 +8,9 @@ const socketServer = io(httpServer);
 
 socketServer.on('connection', function (socket) {
     console.log("a socket connected");
-    socket.on('client-event', function(data) {
-        var move = data['player-move'];
-        console.log("Received client event: " + move.x + ',' + move.y);
+    socket.on('client-updates', function(data) {
+        var updates = data.updates;
+        console.log("client updates: " + JSON.stringify(updates));
     });
 });
 
