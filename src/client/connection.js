@@ -4,6 +4,7 @@ class ConnectionManager {
     constructor() {
         this.queue = [];
         this.socket = null;
+        this.connectionLive = false;
         this.interval = null;
     }
 
@@ -15,10 +16,17 @@ class ConnectionManager {
 
             this.socket.on('connect', () => {
                 this.socket.on('authorized', (result) => {
-                    console.log('authorized', result);
+                    this.connectionLive = true;
                 });
 
-                this.socket.emit('authorize', {username: 'eric', password: '1234'});
+                this.socket.emit('authorize', {
+                    username: 'eric',
+                    password: '1234'
+                });
+            });
+
+            this.socket.on('disconnect', () => {
+                this.connectionLive = false;
             });
         }
 
@@ -34,8 +42,8 @@ class ConnectionManager {
     }
 
     processQueue() {
-        const toSend = this.queue;
-        if (toSend.length > 0) {
+        if (this.connectionLive && this.queue.length > 0) {
+            const toSend = this.queue;
             this.queue = [];
 
             this.socket.emit('client-updates', {
