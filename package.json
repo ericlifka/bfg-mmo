@@ -39,5 +39,8 @@
     "broccoli-funnel": "^0.2.3",
     "broccoli-less-single": "^0.2.0",
     "broccoli-merge-trees": "^0.2.1"
+  },
+  "dependencies": {
+    "babel": "^5.1.10"
   }
 }
