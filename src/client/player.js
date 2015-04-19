@@ -1,3 +1,59 @@
+class PlayerCommand {
+    constructor(entity) {
+        this.entity = entity;
+        this.isDone = false;
+    }
+
+    execute(timeRatio) {
+        this.isDone = true;
+    }
+}
+
+class PlayerMoveCommand extends PlayerCommand {
+    constructor(entity, x, y) {
+        super(entity);
+        this.target = {x: x, y: y};
+    }
+
+    // TODO: Move to a MathUtils?
+    static fcmp(f1, f2, tolerance) {
+        return ((f1 < f2 + tolerance) && (f1 > f2 - tolerance));
+    }
+
+    travelSegment(timeRatio, pos1, pos2) {
+        let dx = pos2.x - pos1.x;
+        let dy = pos2.y - pos1.y;
+        let len = Math.sqrt(dx * dx + dy * dy);
+        if (len === 0) {
+            this.isDone = true;
+            return pos2;
+        }
+
+        let velocity = this.entity.getVelocity(timeRatio);
+        let travel = velocity / len;
+        if (travel > 1) {
+            travel = 1;
+        }
+
+        return {
+            x: (pos1.x + (travel * dx)),
+            y: (pos1.y + (travel * dy))
+        };
+    }
+
+    execute(timeRatio) {
+        let newPos = this.travelSegment(
+                timeRatio, this.entity.position, this.target);
+
+        this.entity.updatePosition(newPos);
+
+        if (PlayerMoveCommand.fcmp(newPos.x, this.target.x, 0.5) &&
+                PlayerMoveCommand.fcmp(newPos.y, this.target.y, 0.5)) {
+            this.isDone = true;
+        }
+    }
+}
+
 class Player {
     // Things to track (as related to renderable entity):
     //   orientation
@@ -21,9 +77,18 @@ class Player {
         this.sprite = new PIXI.Sprite.fromImage(data.image);
     }
 
+    getVelocity(timeRatio) {
+        return (timeRatio / 1000) * 200;
+    }
+
+    updatePosition(pos) {
+        this.position.x = pos.x;
+        this.position.y = pos.y;
+    }
+
     update(timeRatio, inputState) {
-        // Update 
-        let velocity = 3;
+        // Update
+        let velocity = this.getVelocity(timeRatio);
         if (inputState.right) {
             this.position.x += velocity;
         } else if (inputState.left) {
@@ -34,6 +99,20 @@ class Player {
             this.position.y -= velocity;
         } else if (inputState.down) {
             this.position.y += velocity;
+        }
+
+        if (inputState.primary) {
+            // Issue move command
+            let x = inputState.primary.x;
+            let y = inputState.primary.y;
+            this.moveCommand = new PlayerMoveCommand(this, x, y);
+        }
+
+        if (this.moveCommand) {
+            this.moveCommand.execute(timeRatio);
+            if (this.moveCommand.isDone) {
+                this.moveCommand = null;
+            }
         }
     }
 }
