@@ -1,3 +1,5 @@
+import Connection from './connection';
+
 class PlayerCommand {
     constructor(entity) {
         this.entity = entity;
@@ -85,7 +87,8 @@ class Player {
     updatePosition(pos) {
         this.position.x = pos.x;
         this.position.y = pos.y;
-        this.game.sendEvent({'player-move': this.position});
+
+        Connection.sendEvent({'player-move': this.position});
     }
 
     update(timeRatio, inputState) {

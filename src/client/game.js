@@ -1,12 +1,11 @@
 import Input from './input';
 import Player from './player';
-
-const FIX_ME_SERVER_ADDRESS = "http://localhost:3000";
+import Connection from './connection';
 
 class Game {
 
     constructor(viewport) {
-        this.socket = io(FIX_ME_SERVER_ADDRESS);
+        Connection.connect();
 
         this.namespace = 'game';
         this.player = null;
@@ -19,14 +18,7 @@ class Game {
         this.stage = new PIXI.Stage(0xdfdfdf, interactive);
         this.viewport.appendChild(this.renderer.view);
 
-        this.socket = io.connect(this.socketConnectionString());
-
         this.input = new Input(this.stage);
-    }
-
-    socketConnectionString() {
-        // return '//' + document.domain + ':'  + '3000' + this.namespace;
-        return '//' + document.domain + ':'  + '3000';
     }
 
     start() {
@@ -66,10 +58,6 @@ class Game {
 
         this.lastTimeStamp = Date.now();
         requestAnimationFrame(browserFrameHook);
-    }
-
-    sendEvent(payload) {
-        this.socket.emit('client-event', payload);
     }
 
     nextAnimationFrame() {
