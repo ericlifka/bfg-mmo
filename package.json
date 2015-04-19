@@ -27,7 +27,7 @@
     }
   ],
   "scripts": {
-    "jshint": "echo 'blah'",
+    "jshint": "jshint -c .jshintrc --exclude-path .gitignore .",
     "postinstall": "bower install",
     "client": "broccoli serve",
     "server": "node src/server-app.js"
@@ -43,6 +43,7 @@
     "broccoli-funnel": "^0.2.3",
     "broccoli-less-single": "^0.2.0",
     "broccoli-merge-trees": "^0.2.1",
+    "jshint": "^2.7.0",
     "pre-commit": "^1.0.6"
   },
   "dependencies": {
