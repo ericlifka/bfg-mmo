@@ -27,6 +27,8 @@
     }
   ],
   "scripts": {
+    "pre-commit": ["jshint"],
+    "jshint": "echo 'blah'",
     "postinstall": "bower install",
     "client": "broccoli serve",
     "server": "node src/server-app.js"
