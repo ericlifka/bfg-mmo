@@ -28,11 +28,13 @@ class ConnectionManager {
 
     processQueue() {
         const toSend = this.queue;
-        this.queue = [];
+        if (toSend.length > 0) {
+            this.queue = [];
 
-        this.socket.emit('client-updates', {
-            updates: toSend
-        });
+            this.socket.emit('client-updates', {
+                updates: toSend
+            });
+        }
     }
 }
 
