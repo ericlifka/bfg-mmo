@@ -26,7 +26,11 @@
       "url": "https://github.com/WalterCReel3"
     }
   ],
-  "scripts": {},
+  "scripts": {
+    "postinstall": "bower install",
+    "client": "broccoli serve",
+    "server": "node src/server-app.js"
+  },
   "devDependencies": {
     "broccoli": "~0.16.0",
     "broccoli-babel-transpiler": "^4.0.1",
