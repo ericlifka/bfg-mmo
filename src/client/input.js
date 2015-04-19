@@ -46,12 +46,12 @@ class Input {
 
     getFrameState() {
         return {
-            up: this.keyCache['W'],
-            left: this.keyCache['A'],
-            down: this.keyCache['S'],
-            right: this.keyCache['D']
-        }
+            up: this.keyCache.W,
+            left: this.keyCache.A,
+            down: this.keyCache.S,
+            right: this.keyCache.D
+        };
     }
 }
 
-export default Input
+export default Input;

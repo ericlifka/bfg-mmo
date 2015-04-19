@@ -23,7 +23,7 @@ class Player {
 
     update(timeRatio, inputState) {
         // Update 
-        let velocity = 3
+        let velocity = 3;
         if (inputState.right) {
             this.position.x += velocity;
         } else if (inputState.left) {
@@ -38,4 +38,4 @@ class Player {
     }
 }
 
-export default Player
+export default Player;

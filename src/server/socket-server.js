@@ -1,6 +1,6 @@
-import http from 'http'
-import express from 'express'
-import io from 'socket.io'
+import http from 'http';
+import express from 'express';
+import io from 'socket.io';
 
 const app = express();
 const httpServer = http.Server(app);
