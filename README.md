@@ -1,10 +1,18 @@
 # bfg-mmo
 
 ## Install Dependencies
-> npm install
+```
+$ npm install -g bower
+$ npm install -g broccoli
+$ npm install
+```
 
 ## Run Server
-> npm run server
+```
+$ npm run server
+```
 
 ## Run Client
-> npm run client
+```
+$ npm run client
+```
