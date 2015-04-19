@@ -31,7 +31,7 @@ class Game {
         loader.onComplete = () => {
             this.initialize();
             this.startGameLoop();
-        }
+        };
         loader.load();
     }
 
@@ -39,7 +39,7 @@ class Game {
         // Player data would come from the server in some manner
         let test_player_data = {
             image: 'sprites/wizard_girl.png'
-        }
+        };
 
         this.player = new Player(test_player_data);
         this.stage.addChild(this.player.sprite);
@@ -49,7 +49,7 @@ class Game {
         let browserFrameHook = () => {
             this.nextAnimationFrame();
             requestAnimationFrame(browserFrameHook);
-        }
+        };
 
         this.lastTimeStamp = Date.now();
         requestAnimationFrame(browserFrameHook);
