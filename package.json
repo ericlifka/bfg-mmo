@@ -27,12 +27,14 @@
     }
   ],
   "scripts": {
-    "pre-commit": ["jshint"],
     "jshint": "echo 'blah'",
     "postinstall": "bower install",
     "client": "broccoli serve",
     "server": "node src/server-app.js"
   },
+  "pre-commit": [
+    "jshint"
+  ],
   "devDependencies": {
     "broccoli": "~0.16.0",
     "broccoli-babel-transpiler": "^4.0.1",
@@ -40,7 +42,8 @@
     "broccoli-fast-browserify": "^0.2.5",
     "broccoli-funnel": "^0.2.3",
     "broccoli-less-single": "^0.2.0",
-    "broccoli-merge-trees": "^0.2.1"
+    "broccoli-merge-trees": "^0.2.1",
+    "pre-commit": "^1.0.6"
   },
   "dependencies": {
     "babel": "^5.1.10",
