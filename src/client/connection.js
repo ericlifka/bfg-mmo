@@ -12,6 +12,14 @@ class ConnectionManager {
         // at some point in the near future and I didn't want that tied to the module being created.
         if (!this.socket) {
             this.socket = io(socketConnectionString());
+
+            this.socket.on('connect', () => {
+                this.socket.on('authorized', (result) => {
+                    console.log('authorized', result);
+                });
+
+                this.socket.emit('authorize', {username: 'bob'});
+            });
         }
 
         if (!this.interval) {
@@ -23,7 +31,6 @@ class ConnectionManager {
         this.queue.push({
             [event]: payload
         });
-        //this.socket.emit('client-event', payload);
     }
 
     processQueue() {
