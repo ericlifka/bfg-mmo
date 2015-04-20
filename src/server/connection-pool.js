@@ -1,13 +1,4 @@
-const LOL_USERS_TABLE = {
-    "walter": "1234",
-    "eric": "1234",
-    "dennis": "1234",
-    "jesse": "1234"
-};
-const authenticate = (username, password) => {
-    return LOL_USERS_TABLE.hasOwnProperty(username) &&
-        LOL_USERS_TABLE[username] === password;
-};
+import Auth from './auth';
 
 class ConnectionPool {
     constructor() {
@@ -16,7 +7,7 @@ class ConnectionPool {
 
     newConnection(socket) {
         socket.on('authorize', ({username, password} = {}) => {
-            if (!authenticate(username, password)) {
+            if (!Auth.authenticate(username, password)) {
                 socket.emit('authorized', {
                     authorized: false
                 });
