@@ -18,6 +18,7 @@ export default class ConnectionPool {
                 return;
             }
 
+            socket.authorizedUser = username;
             this.connections[socket.id] = socket;
             this.addEventListeners(socket);
 
@@ -31,7 +32,7 @@ export default class ConnectionPool {
 
         socket.on('client-updates', (data) => {
             const updates = data.updates;
-            console.log("client updates: " + JSON.stringify(updates));
+            this.delegate.processUpdates(socket.authorizedUser, updates);
         });
 
         socket.on('disconnect', () => {

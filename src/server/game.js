@@ -6,4 +6,8 @@ export default class Game {
     setEmitter(emitter) {
         this.emitter = emitter;
     }
+
+    processUpdates(player, updates) {
+        console.log("client updates: ", player, updates);
+    }
 }
