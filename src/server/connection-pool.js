@@ -11,20 +11,22 @@ export default class ConnectionPool {
 
     newConnection(socket) {
         socket.on('authorize', ({username, password} = {}) => {
-            if (!Auth.authenticate(username, password)) {
+            if (Auth.authenticate(username, password)) {
+                socket.player = username;
+                this.connections[socket.player] = socket;
+                this.addEventListeners(socket);
+
+                socket.emit('authorized', {
+                    authorized: true
+                });
+
+                this.delegate.playerLoggedIn(socket.player);
+            }
+            else {
                 socket.emit('authorized', {
                     authorized: false
                 });
-                return;
             }
-
-            socket.authorizedUser = username;
-            this.connections[socket.id] = socket;
-            this.addEventListeners(socket);
-
-            socket.emit('authorized', {
-                authorized: true
-            });
         });
     }
 
@@ -32,11 +34,12 @@ export default class ConnectionPool {
 
         socket.on('client-updates', (data) => {
             const updates = data.updates;
-            this.delegate.processUpdates(socket.authorizedUser, updates);
+            this.delegate.processUpdates(socket.player, updates);
         });
 
         socket.on('disconnect', () => {
-            this.connections[socket.id] = null;
+            this.connections[socket.player] = null;
+            this.delegate.playerLoggedOut(player);
         });
 
     }
