@@ -1,8 +1,12 @@
 import Auth from './auth';
 
-class ConnectionPool {
+export default class ConnectionPool {
     constructor() {
         this.connections = {};
+    }
+
+    setEventDelegate(delegate) {
+        this.delegate = delegate;
     }
 
     newConnection(socket) {
@@ -36,5 +40,3 @@ class ConnectionPool {
 
     }
 }
-
-export default new ConnectionPool();
