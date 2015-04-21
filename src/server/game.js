@@ -3,7 +3,7 @@ export default class Game {
         this.chunks = {
             town: {
                 dimensions: {x: 1024, y: 576},
-                players: []
+                players: new Set()
             }
         };
 
@@ -22,8 +22,12 @@ export default class Game {
         //  - send player state / info to other players on next tick
     }
 
-    playerLoggedOut(player) {
-        //TODO: remove them from world
+    playerLoggedOut(playerName) {
+        const chunkName = this.players[playerName].chunk;
+        const chunk = this.chunks[chunkName];
+
+        this.players[playerName].loggedIn = false;
+        chunk.players.delete(playerName);
     }
 
     processUpdates(player, updates) {
@@ -32,17 +36,19 @@ export default class Game {
 
     // internal
 
-    initializePlayer(player) {
-        if (!this.players[player]) {
-            this.players[player] = {
+    initializePlayer(playerName) {
+        if (!this.players[playerName]) {
+            this.players[playerName] = {
                 chunk: 'town',
                 position: {x: 100, y: 100}
             };
         }
 
-        const chunkName = this.players[player].chunk;
+        this.players[playerName].loggedIn = true;
+
+        const chunkName = this.players[playerName].chunk;
         const chunk = this.chunks[chunkName];
 
-        chunk.players.push(player);
+        chunk.players.add(playerName);
     }
 }
