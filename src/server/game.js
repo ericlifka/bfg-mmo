@@ -1,6 +1,13 @@
 export default class Game {
     constructor() {
+        this.chunks = {
+            town: {
+                dimensions: {x: 1024, y: 576},
+                players: []
+            }
+        };
 
+        this.players = {};
     }
 
     setEmitter(emitter) {
@@ -8,6 +15,7 @@ export default class Game {
     }
 
     playerLoggedIn(player) {
+        this.initializePlayer(player);
         //TODO:
         //  - put player in world
         //  - send player world state
@@ -20,5 +28,21 @@ export default class Game {
 
     processUpdates(player, updates) {
         console.log("client updates: ", player, updates);
+    }
+
+    // internal
+
+    initializePlayer(player) {
+        if (!this.players[player]) {
+            this.players[player] = {
+                chunk: 'town',
+                position: {x: 100, y: 100}
+            };
+        }
+
+        const chunkName = this.players[player].chunk;
+        const chunk = this.chunks[chunkName];
+
+        chunk.players.push(player);
     }
 }
