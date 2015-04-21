@@ -1,6 +1,7 @@
 import Input from './input';
 import Player from './player';
 import Connection from './connection';
+import Scene from './scene';
 
 class Game {
 
@@ -13,12 +14,16 @@ class Game {
         this.assetPaths = [
             'sprites/wizard_girl.png'
         ];
+
         this.renderer = new PIXI.WebGLRenderer(1024, 576);
-        let interactive = true;
-        this.stage = new PIXI.Stage(0xdfdfdf, interactive);
+        this.stage = new PIXI.Stage(0xdfdfdf, true);
+        this.scene = new Scene(this, 1024, 576);
+        this.input = new Input(this.stage);
+
         this.viewport.appendChild(this.renderer.view);
 
-        this.input = new Input(this.stage);
+        this.entities = [];
+        this.player = null;
     }
 
     start() {
@@ -47,7 +52,13 @@ class Game {
         };
 
         this.player = new Player(this, test_player_data);
-        this.stage.addChild(this.player.sprite);
+        this.addEntity(this.player);
+        this.scene.setTrackingEntity(this.player);
+    }
+
+    addEntity(entity) {
+        this.entities.push(entity);
+        this.stage.addChild(entity.sprite);
     }
 
     startGameLoop() {
@@ -62,15 +73,11 @@ class Game {
 
     nextAnimationFrame() {
         let elapsed = this.elapsedSinceLastFrame();
-
         let inputState = this.input.getFrameState();
-
-        this.player.update(elapsed, inputState);
-
-        // Need a camera for world to screen translations
-        this.player.sprite.x = Math.round(this.player.position.x);
-        this.player.sprite.y = Math.round(this.player.position.y);
-
+        for (let entity of this.entities) {
+            entity.update(elapsed, inputState);
+        }
+        this.scene.update();
         this.renderer.render(this.stage);
         this.input.click = null;
     }

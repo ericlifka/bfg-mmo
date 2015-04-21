@@ -67,7 +67,7 @@ class Player {
     constructor(game, data) {
         this.game = game;
         this.sprite = null;
-        this.position =  { x: 100, y: 100 };
+        this.position =  { x: 0, y: 0 };
         this.orientation = 0; // TODO: need enumarted cardinal directions
 
         this.velocity = 1000;
@@ -107,18 +107,18 @@ class Player {
             }
 
             if (inputState.up) {
-                newY = this.position.y - velocity;
-            } else if (inputState.down) {
                 newY = this.position.y + velocity;
+            } else if (inputState.down) {
+                newY = this.position.y - velocity;
             }
             this.updatePosition({x: newX, y: newY});
         }
 
         if (inputState.primary) {
             // Issue move command
-            let x = inputState.primary.x;
-            let y = inputState.primary.y;
-            this.moveCommand = new PlayerMoveCommand(this, x, y);
+            // let x = inputState.primary.x;
+            // let y = inputState.primary.y;
+            // this.moveCommand = new PlayerMoveCommand(this, x, y);
         }
 
         if (this.moveCommand) {
