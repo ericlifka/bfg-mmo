@@ -14,6 +14,10 @@ export default class Game {
         this.emitter = emitter;
     }
 
+    startUpdateLoop() {
+
+    }
+
     playerLoggedIn(player) {
         this.initializePlayer(player);
         //TODO:

@@ -17,5 +17,6 @@ const socketServer = io(httpServer);
 socketServer.on('connection', socket => connPool.newConnection(socket));
 
 export var start = PORT => httpServer.listen(PORT, () => {
+    game.startUpdateLoop();
     console.log(`listening on http://localhost:${PORT}`);
 });
