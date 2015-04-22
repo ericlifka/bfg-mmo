@@ -14,9 +14,7 @@ const app = express();
 const httpServer = Server(app);
 const socketServer = io(httpServer);
 
-socketServer.on('connection', (socket) => {
-    connPool.newConnection(socket);
-});
+socketServer.on('connection', socket => connPool.newConnection(socket));
 
 export var start = function () {
     httpServer.listen(3000, function () {
