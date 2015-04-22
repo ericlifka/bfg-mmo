@@ -16,8 +16,6 @@ const socketServer = io(httpServer);
 
 socketServer.on('connection', socket => connPool.newConnection(socket));
 
-export var start = function () {
-    httpServer.listen(3000, function () {
-        console.log("listening on http://localhost:3000");
-    });
-};
+export var start = PORT => httpServer.listen(PORT, () => {
+    console.log(`listening on http://localhost:${PORT}`);
+});
