@@ -19,6 +19,13 @@ export default class Scene {
             this.camera.trackPosition(this.trackingEntity.position);
         }
 
+        let level = this.game.currentLevel;
+        for (let tile of level.tiles) {
+            let newCoords = this.camera.translateCoordinates(tile.position);
+            tile.sprite.x = Math.round(newCoords.x);
+            tile.sprite.y = Math.round(newCoords.y);
+        }
+
         for (let entity of this.game.entities) {
             let newCoords = this.camera.translateCoordinates(entity.position);
             entity.sprite.x = Math.round(newCoords.x);

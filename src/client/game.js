@@ -1,6 +1,7 @@
 import Input from './input';
 import Player from './player';
 import Connection from './connection';
+import Level from './level';
 import Scene from './scene';
 
 class Game {
@@ -12,7 +13,8 @@ class Game {
         this.player = null;
         this.viewport = viewport;
         this.assetPaths = [
-            'sprites/wizard_girl.png'
+            'sprites/wizard_girl.png',
+            'sprites/32x32_map_tile v3.1.json'
         ];
 
         this.renderer = new PIXI.WebGLRenderer(1024, 576);
@@ -51,6 +53,9 @@ class Game {
             image: 'sprites/wizard_girl.png'
         };
 
+        let level_data = {}; // nothing right now
+        this.currentLevel = new Level({});
+        this.addLevel(this.currentLevel);
         this.player = new Player(this, test_player_data);
         this.addEntity(this.player);
         this.scene.setTrackingEntity(this.player);
@@ -59,6 +64,12 @@ class Game {
     addEntity(entity) {
         this.entities.push(entity);
         this.stage.addChild(entity.sprite);
+    }
+
+    addLevel(level) {
+        for (let tile of level.tiles) {
+            this.stage.addChild(tile.sprite);
+        }
     }
 
     startGameLoop() {
