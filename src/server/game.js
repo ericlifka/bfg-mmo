@@ -1,3 +1,5 @@
+import GameLoop from './game-loop';
+
 export default class Game {
     constructor() {
         this.chunks = {
@@ -15,7 +17,7 @@ export default class Game {
     }
 
     startUpdateLoop() {
-
+        GameLoop.run(100, dTime => this.updateTick(dTime));
     }
 
     playerLoggedIn(player) {
@@ -54,5 +56,9 @@ export default class Game {
         const chunk = this.chunks[chunkName];
 
         chunk.players.add(playerName);
+    }
+
+    updateTick(dTime) {
+        console.log(`TICK! ${dTime}`);
     }
 }
