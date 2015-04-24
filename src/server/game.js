@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import GameLoop from './game-loop';
 
 export default class Game {
@@ -5,7 +6,8 @@ export default class Game {
         this.chunks = {
             town: {
                 dimensions: {x: 1024, y: 576},
-                players: new Set()
+                players: new Set(),
+                updates: []
             }
         };
 
@@ -46,7 +48,8 @@ export default class Game {
         if (!this.players[playerName]) {
             this.players[playerName] = {
                 chunk: 'town',
-                position: {x: 100, y: 100}
+                position: {x: 100, y: 100},
+                updates: []
             };
         }
 
@@ -60,5 +63,19 @@ export default class Game {
 
     updateTick(dTime) {
         console.log(`TICK! ${dTime}`);
+
+        _.each(this.chunks, (chunk, name) => {
+            const updates = chunk.updates;
+            chunk.updates = [];
+
+            console.log(`${name} updates: ${updates}`);
+        });
+
+        _.each(this.players, (player, name) => {
+            const updates = player.updates;
+            player.updates = [];
+
+            console.log(`${name} updates: ${updates}`);
+        });
     }
 }
