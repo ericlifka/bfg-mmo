@@ -20,6 +20,7 @@ export default class Chunk {
         let generator = new ChunkGenerator(TILE_TYPES, bounds);
         this.tiles = generator.generate();
         this.players = new Set();
+        this.updates = [];
     }
 
     serialize() {
