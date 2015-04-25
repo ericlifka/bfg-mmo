@@ -44,7 +44,8 @@ class ConnectionManager {
 
     sendEvent(event, payload) {
         this.queue.push({
-            [event]: payload
+            type: event,
+            description: payload
         });
     }
 

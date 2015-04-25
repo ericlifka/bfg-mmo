@@ -2,6 +2,12 @@ import _ from 'lodash';
 import GameLoop from './game-loop';
 import Chunk from './chunk';
 
+const UpdateStrategies = {
+    'player-move': function (player, {x, y}) {
+        console.log(`move: x-${x}, y-${y}`);
+    }
+};
+
 export default class Game {
     constructor() {
         this.chunks = {};
@@ -35,7 +41,14 @@ export default class Game {
     }
 
     processUpdates(player, updates) {
-        console.log("client updates: ", player, updates);
+        _.each(updates, (update) => {
+            const strategy = UpdateStrategies[update.type];
+            if (strategy) {
+                strategy.call(this, player, update.description);
+            } else {
+                console.error(`Encountered update type without valid strategy: ${update.type}`);
+            }
+        });
     }
 
     loadChunk(id) {
@@ -70,20 +83,18 @@ export default class Game {
     }
 
     updateTick(dTime) {
-        console.log(`TICK! ${dTime}`);
-
         _.each(this.chunks, (chunk, name) => {
             const updates = chunk.updates;
             chunk.updates = [];
 
-            console.log(`${name} updates: ${updates}`);
+            //console.log(`${name} updates: ${updates}`);
         });
 
         _.each(this.players, (player, name) => {
             const updates = player.updates;
             player.updates = [];
 
-            console.log(`${name} updates: ${updates}`);
+            //console.log(`${name} updates: ${updates}`);
         });
     }
 }
