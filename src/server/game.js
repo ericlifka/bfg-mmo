@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import GameLoop from './game-loop';
 import Chunk from './chunk';
+import Player from './player';
+import GameLoop from './game-loop';
 
 export default class Game {
     constructor() {
@@ -16,15 +17,18 @@ export default class Game {
         GameLoop.run(100, dTime => this.updateTick(dTime));
     }
 
-    playerLoggedIn(player) {
-        this.initializePlayer(player);
+    playerLoggedIn(playerName) {
+        this.initializePlayer(playerName);
         //TODO:
         //  - put player in world
         //  - send player world state
         //  - send player state / info to other players on next tick
-        const chunk = this.getPlayerChunk(player);
-        const socket = this.emitter.connections[player];
+        const player = this.players[playerName];
+        const chunk = this.getPlayerChunk(playerName);
+        const socket = this.emitter.connections[playerName];
         socket.emit('chunk-data', chunk.serialize());
+        socket.emit('player-data', player.serialize());
+        socket.emit('ready', {});
     }
 
     playerLoggedOut(playerName) {
@@ -53,18 +57,19 @@ export default class Game {
     // internal
 
     initializePlayer(playerName) {
+        let player = null;
         if (!this.players[playerName]) {
-            this.players[playerName] = {
-                chunk: 'spawn',
-                position: {x: 100, y: 100},
-                updates: []
-            };
+            let position = {x: 100, y: 100};
+            const chunkName = 'spawn';
+            player = new Player(playerName, chunkName, position);
+            this.players[playerName] = player;
+        } else {
+            player = this.players[playerName];
         }
 
-        this.players[playerName].loggedIn = true;
+        player.loggedIn = true;
 
-        const chunkName = this.players[playerName].chunk;
-        const chunk = this.loadChunk(chunkName);
+        const chunk = this.loadChunk(player.chunk);
 
         chunk.players.add(playerName);
     }

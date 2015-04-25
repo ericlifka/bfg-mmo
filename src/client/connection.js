@@ -28,8 +28,16 @@ class ConnectionManager {
                 });
             });
 
-            this.socket.on('chunk-data', (level_data) => {
-                game.loadChunk(level_data);
+            this.socket.on('chunk-data', (chunkData) => {
+                game.loadChunk(chunkData);
+            });
+
+            this.socket.on('player-data', (playerData) => {
+                game.initializePlayer(playerData);
+            });
+
+            this.socket.on('ready', () => {
+                game.worldReady = true;
             });
 
             this.socket.on('disconnect', () => {

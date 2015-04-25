@@ -12,7 +12,7 @@ class Player {
     constructor(game, data) {
         this.game = game;
         this.sprite = null;
-        this.position =  { x: 0, y: 0 };
+        this.position = data.position;
         this.orientation = 0; // TODO: need enumarted cardinal directions
 
         this.velocity = 1000;
