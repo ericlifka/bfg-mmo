@@ -5,7 +5,6 @@ An exploration in game design and haphazard collaboration.
 ### Project Setup
 #### Dependencies
 ```
-$ npm install -g bower
 $ npm install
 ```
 #### Run Server

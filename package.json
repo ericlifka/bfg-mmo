@@ -36,6 +36,7 @@
     "jshint"
   ],
   "devDependencies": {
+    "bower": "^1.4.1",
     "broccoli": "~0.16.0",
     "broccoli-babel-transpiler": "^4.0.1",
     "broccoli-cli": "^1.0.0",
