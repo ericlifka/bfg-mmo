@@ -17,7 +17,7 @@ class Game {
         ];
 
         this.renderer = new PIXI.WebGLRenderer(1024, 576);
-        this.stage = new PIXI.Stage(0xdfdfdf, true);
+        this.stage = new PIXI.Container(0xdfdfdf, true); // PIXI.Stage(0xdfdfdf, true);
         this.scene = new Scene(this, 1024, 576);
         this.input = new Input(this.stage);
 
@@ -39,12 +39,13 @@ class Game {
         // Current world/plane etc would come from the server and the
         // related assets would need to be loaded at this point.
 
-        let loader = new PIXI.AssetLoader(this.assetPaths);
+        let loader = new PIXI.loaders.Loader(this.assetPaths);
         loader.onComplete = () => {
             this.initialize();
             this.startGameLoop();
         };
         loader.load();
+
     }
 
     loadChunk(chunkData) {
