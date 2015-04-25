@@ -7,9 +7,8 @@ import Scene from './scene';
 class Game {
 
     constructor(viewport) {
-        Connection.connect();
+        Connection.connect(this);
 
-        this.namespace = 'game';
         this.player = null;
         this.viewport = viewport;
         this.assetPaths = [
@@ -26,6 +25,7 @@ class Game {
 
         this.entities = [];
         this.player = null;
+        this.currentLevel = null;
     }
 
     start() {
@@ -47,18 +47,20 @@ class Game {
         loader.load();
     }
 
+    loadChunk(chunkData) {
+        this.currentLevel = new Level(chunkData);
+        this.addLevel(this.currentLevel);
+        this.addEntity(this.player);
+        this.scene.setTrackingEntity(this.player);
+    }
+
     initialize() {
         // Player data would come from the server in some manner
         let test_player_data = {
             image: 'sprites/wizard_girl.png'
         };
 
-        let level_data = {}; // nothing right now
-        this.currentLevel = new Level({});
-        this.addLevel(this.currentLevel);
         this.player = new Player(this, test_player_data);
-        this.addEntity(this.player);
-        this.scene.setTrackingEntity(this.player);
     }
 
     addEntity(entity) {
@@ -84,13 +86,23 @@ class Game {
 
     nextAnimationFrame() {
         let elapsed = this.elapsedSinceLastFrame();
-        let inputState = this.input.getFrameState();
-        for (let entity of this.entities) {
-            entity.update(elapsed, inputState);
+        // FIXME: Temp hack to filter out an invalid state
+        // really this would be a client state that is set
+        // when the appropriate server data has been loaded
+        // by the client and the client is ready to process
+        // local events.
+        if (this.currentLevel) {
+            // Server data loaded
+            let inputState = this.input.getFrameState();
+            for (let entity of this.entities) {
+                entity.update(elapsed, inputState);
+            }
+            this.scene.update();
+            this.renderer.render(this.stage);
+            this.input.click = null;
+        } else {
+            // Waiting for server data
         }
-        this.scene.update();
-        this.renderer.render(this.stage);
-        this.input.click = null;
     }
 
     elapsedSinceLastFrame() {

@@ -1,16 +1,10 @@
 import _ from 'lodash';
 import GameLoop from './game-loop';
+import Chunk from './chunk';
 
 export default class Game {
     constructor() {
-        this.chunks = {
-            town: {
-                dimensions: {x: 1024, y: 576},
-                players: new Set(),
-                updates: []
-            }
-        };
-
+        this.chunks = {};
         this.players = {};
     }
 
@@ -28,11 +22,13 @@ export default class Game {
         //  - put player in world
         //  - send player world state
         //  - send player state / info to other players on next tick
+        const chunk = this.getPlayerChunk(player);
+        const socket = this.emitter.connections[player];
+        socket.emit('chunk-data', chunk.serialize());
     }
 
     playerLoggedOut(playerName) {
-        const chunkName = this.players[playerName].chunk;
-        const chunk = this.chunks[chunkName];
+        const chunk = this.getPlayerChunk(playerName);
 
         this.players[playerName].loggedIn = false;
         chunk.players.delete(playerName);
@@ -42,12 +38,24 @@ export default class Game {
         console.log("client updates: ", player, updates);
     }
 
+    loadChunk(id) {
+        if (!this.chunks[id]) {
+            this.chunks[id] = new Chunk(id);
+        }
+        return this.chunks[id];
+    }
+
+    getPlayerChunk(playerName) {
+        const chunkName = this.players[playerName].chunk;
+        return this.chunks[chunkName];
+    }
+
     // internal
 
     initializePlayer(playerName) {
         if (!this.players[playerName]) {
             this.players[playerName] = {
-                chunk: 'town',
+                chunk: 'spawn',
                 position: {x: 100, y: 100},
                 updates: []
             };
@@ -56,7 +64,7 @@ export default class Game {
         this.players[playerName].loggedIn = true;
 
         const chunkName = this.players[playerName].chunk;
-        const chunk = this.chunks[chunkName];
+        const chunk = this.loadChunk(chunkName);
 
         chunk.players.add(playerName);
     }

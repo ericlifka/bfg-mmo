@@ -6,11 +6,14 @@ class ConnectionManager {
         this.socket = null;
         this.connectionLive = false;
         this.interval = null;
+        this.game = null;
     }
 
-    connect() {
-        // I put this separate from the constructor because I'm assuming we'll need authentication logic
-        // at some point in the near future and I didn't want that tied to the module being created.
+    connect(game) {
+        this.game = game;
+        // I put this separate from the constructor because I'm assuming we'll
+        // need authentication logic at some point in the near future and I
+        // didn't want that tied to the module being created.
         if (!this.socket) {
             this.socket = io(socketConnectionString());
 
@@ -23,6 +26,10 @@ class ConnectionManager {
                     username: 'eric',
                     password: '1234'
                 });
+            });
+
+            this.socket.on('chunk-data', (level_data) => {
+                game.loadChunk(level_data);
             });
 
             this.socket.on('disconnect', () => {

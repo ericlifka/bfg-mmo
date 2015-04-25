@@ -38,7 +38,8 @@ export default class ConnectionPool {
         });
 
         socket.on('disconnect', () => {
-            this.connections[socket.player] = null;
+            const player = socket.player;
+            this.connections[player] = null;
             this.delegate.playerLoggedOut(player);
         });
 
