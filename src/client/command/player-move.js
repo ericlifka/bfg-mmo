@@ -1,3 +1,5 @@
+import Command from './command';
+
 class PlayerMoveCommand extends Command {
     constructor(entity, x, y) {
         super(entity);
