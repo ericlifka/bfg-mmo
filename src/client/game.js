@@ -1,8 +1,8 @@
 import Input from './input';
-import Player from './player';
-import Connection from './connection';
 import Level from './level';
 import Scene from './scene';
+import Player from './player';
+import Connection from './connection';
 
 class Game {
 
@@ -26,6 +26,8 @@ class Game {
         this.entities = [];
         this.player = null;
         this.currentLevel = null;
+
+        this.worldReady = false;
     }
 
     start() {
@@ -41,7 +43,6 @@ class Game {
 
         let loader = new PIXI.loaders.Loader(this.assetPaths);
         loader.onComplete = () => {
-            this.initialize();
             this.startGameLoop();
         };
         loader.load();
@@ -51,17 +52,12 @@ class Game {
     loadChunk(chunkData) {
         this.currentLevel = new Level(chunkData);
         this.addLevel(this.currentLevel);
-        this.addEntity(this.player);
-        this.scene.setTrackingEntity(this.player);
     }
 
-    initialize() {
-        // Player data would come from the server in some manner
-        let test_player_data = {
-            image: 'sprites/wizard_girl.png'
-        };
-
-        this.player = new Player(this, test_player_data);
+    initializePlayer(playerData) {
+        this.player = new Player(this, playerData);
+        this.addEntity(this.player);
+        this.scene.setTrackingEntity(this.player);
     }
 
     addEntity(entity) {
@@ -92,7 +88,7 @@ class Game {
         // when the appropriate server data has been loaded
         // by the client and the client is ready to process
         // local events.
-        if (this.currentLevel) {
+        if (this.worldReady) {
             // Server data loaded
             let inputState = this.input.getFrameState();
             for (let entity of this.entities) {
