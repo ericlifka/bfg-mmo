@@ -11,6 +11,7 @@ class Game {
 
         this.player = null;
         this.viewport = viewport;
+	this.staticAssetsPath = 'static/';
         this.assetPaths = [
             'sprites/wizard_girl.png',
             'sprites/32x32_map_tile v3.1.json'
@@ -41,12 +42,28 @@ class Game {
         // Current world/plane etc would come from the server and the
         // related assets would need to be loaded at this point.
 
-        let loader = new PIXI.loaders.Loader(this.assetPaths);
-        loader.onComplete = () => {
-            this.startGameLoop();
-        };
-        loader.load();
+        //let loader = new PIXI.AssetLoader(this.assetPaths);
+        //loader.onComplete = () => {
+        //    this.initialize();
+        //    this.startGameLoop();
+        //};
+        //loader.load();
 
+        //let loader = PIXI.loaders.Loader(this.staticAssetsPath);
+        //for (path of this.assetPaths) {
+        //    loader.add(path);
+        //}
+        //loader.load(() => {
+        //    this.initialize();
+        //    this.startGameLoop();
+        //});
+        for (let path of this.assetPaths) {
+            PIXI.loader.add(this.staticAssetsPath + path);
+        }
+        PIXI.loader.load(() => {
+            //this.initialize();
+            this.startGameLoop();
+        });
     }
 
     loadChunk(chunkData) {
