@@ -1,7 +1,7 @@
 export default {
     authenticate(socket, cb) {
         // TODO: TROLLOLOLOLOL - security
-        const username = window.prompt('Username?');
+        const username = localStorage.getItem('test-user') || window.prompt('Username?');
         const password = '1234';
 
         socket.on('authorized', function (result) {
@@ -10,6 +10,7 @@ export default {
                 return;
             }
 
+            localStorage.setItem('test-user', username);
             cb(username);
         });
 
