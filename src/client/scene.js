@@ -9,8 +9,8 @@ export default class Scene {
 
         this.trackingEntity = null;
         this.camera = new Camera(width, height);
-        this.playerLayer = new PIXI.DisplayObjectContainer();
-        this.mapLayer = new PIXI.DisplayObjectContainer();
+        this.playerLayer = new PIXI.Container();
+        this.mapLayer = new PIXI.Container();
 
         this.stage.addChild(this.mapLayer);
         this.stage.addChild(this.playerLayer);
