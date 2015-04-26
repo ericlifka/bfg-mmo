@@ -43,19 +43,11 @@ class Game {
         // Current world/plane etc would come from the server and the
         // related assets would need to be loaded at this point.
 
-        //let loader = new PIXI.AssetLoader(this.assetPaths);
-        //loader.onComplete = () => {
-        //    this.initialize();
-        //    this.startGameLoop();
-        //};
-        //loader.load();
-
         for (let path of this.assetPaths) {
             PIXI.loader.add(path);
         }
 
         PIXI.loader.load(() => {
-            //this.initialize();
             this.startGameLoop();
         });
     }
