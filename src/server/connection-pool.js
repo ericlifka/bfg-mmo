@@ -14,6 +14,16 @@ export default class ConnectionPool {
         socket.on('authorize', ({username, password} = {}) => {
             if (Auth.authenticate(username, password)) {
                 socket.player = username;
+
+                if (this.connections[socket.player]) {
+                    // authenticated user logged in, kick the current connection
+                    console.log(`Kicking old session for player ${socket.player}`);
+                    let currentConnection = this.connections[socket.player];
+                    currentConnection.disconnect();
+                    this.connections[socket.player] = null;
+                    this.delegate.playerLoggedOut(socket.player);
+                }
+
                 this.connections[socket.player] = socket;
                 this.addEventListeners(socket);
 

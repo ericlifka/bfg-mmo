@@ -4,8 +4,18 @@ import Player from './player';
 import GameLoop from './game-loop';
 
 const UpdateStrategies = {
-    'player-move': function (player, {x, y}) {
-        console.log(`move: x-${x}, y-${y}`);
+    'player-move': function (playerName, {x, y}) {
+        const player = this.players[playerName];
+        if (!player) {
+            console.log(`Player not on the server ${player}`);
+        }
+
+        // QUESTION:
+        // Are incoming events processed realtime and then the
+        // server loop broadcasts relevant changes or are the
+        // incoming events batched up in the "updates" queue
+        // and then processed all at once?
+        player.move({x, y});
     }
 };
 
@@ -37,9 +47,9 @@ export default class Game {
 
     playerLoggedOut(playerName) {
         const chunk = this.getPlayerChunk(playerName);
-
-        this.players[playerName].loggedIn = false;
-        chunk.players.delete(playerName);
+        const player = this.players[playerName];
+        player.loggedIn = false;
+        this.playerExitedChunk(player, chunk);
     }
 
     processUpdates(player, updates) {
@@ -65,8 +75,23 @@ export default class Game {
 
     playerEnteredChunk(player, chunk) {
         this.emitter.sendToPlayer(player.name, 'chunk-data', chunk.serialize());
+
+        // Send other players to the joining client
+        for (let playerName of chunk.players) {
+            const other = this.players[playerName];
+            console.log(`Sending login player init ${playerName} for ${player.name}`);
+            this.emitter.sendToPlayer(player.name, 'player-enter', other.serialize());
+        }
+
         this.emitter.joinRoom(player.name, chunk.id);
         this.emitter.sendToRoom(chunk.id, 'player-enter', player.serialize());
+        console.log(`Player ${player.name} entered ${chunk.id}`);
+    }
+
+    playerExitedChunk(player, chunk) {
+        chunk.players.delete(player.name);
+        console.log(`Player ${player.name} exited ${chunk.id}`);
+        this.emitter.sendToRoom(chunk.id, 'player-exit', player.name);
     }
 
     getPlayerChunk(playerName) {
@@ -92,17 +117,32 @@ export default class Game {
 
     updateTick(dTime) {
         _.each(this.chunks, (chunk, name) => {
-            const updates = chunk.updates;
-            chunk.updates = [];
+            let chunkUpdates = {
+                playerUpdates: {}
+            };
 
-            //console.log(`${name} updates: ${updates}`);
+            // const updates = chunk.updates;
+            // chunk.updates = [];
+
+            for (let playerName of chunk.players) {
+                const player = this.players[playerName];
+                const updates = player.updates;
+                player.clearUpdates();
+                chunkUpdates.playerUpdates[playerName] = updates;
+            }
+
+            this.emitter.sendToRoom(chunk.id, 'chunk-updates', chunkUpdates);
         });
 
-        _.each(this.players, (player, name) => {
-            const updates = player.updates;
-            player.updates = [];
+        // QUESTION
+        // Are we partitioning world updates and chunk updates.  Are normal
+        // player actions going to be made through the chunk (room connection)?
 
-            //console.log(`${name} updates: ${updates}`);
-        });
+        // _.each(this.players, (player, name) => {
+        //     // const updates = player.updates;
+        //     // player.clearUpdates();
+        //     // serverUpdates.playerUpdates[name] = updates;
+        //     //console.log(`${name} updates: ${updates}`);
+        // });
     }
 }
