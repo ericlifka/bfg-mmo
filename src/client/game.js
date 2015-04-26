@@ -8,6 +8,8 @@ import RemotePlayer from './remote-player';
 class Game {
 
     constructor(viewport) {
+        Connection.game = this;
+
         this.player = null;
         this.viewport = viewport;
         this.assetPaths = [
@@ -46,8 +48,9 @@ class Game {
         }
 
         PIXI.loader.load(() => {
-            Connection.connect(this);
-            this.startGameLoop();
+            Connection.connect(() => {
+                this.startGameLoop();
+            });
         });
     }
 
