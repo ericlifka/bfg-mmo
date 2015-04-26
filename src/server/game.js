@@ -66,6 +66,7 @@ export default class Game {
     playerEnteredChunk(player, chunk) {
         this.emitter.sendToPlayer(player.name, 'chunk-data', chunk.serialize());
         this.emitter.joinRoom(player.name, chunk.id);
+        this.emitter.sendToRoom(chunk.id, 'player-enter', player.serialize());
     }
 
     getPlayerChunk(playerName) {
@@ -76,7 +77,7 @@ export default class Game {
     initializePlayer(playerName) {
         let player = this.players[playerName];
         if (!player) {
-            let position = {x: 100, y: 100};
+            const position = {x: 100, y: 100};
             const chunkName = 'spawn';
             player = new Player(playerName, chunkName, position);
             this.players[playerName] = player;

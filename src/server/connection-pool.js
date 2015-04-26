@@ -1,8 +1,9 @@
 import Auth from './auth';
 
 export default class ConnectionPool {
-    constructor() {
+    constructor(server) {
         this.connections = {};
+        this.server = server;
     }
 
     setEventDelegate(delegate) {
@@ -48,6 +49,10 @@ export default class ConnectionPool {
         }
 
         socket.emit(event, data);
+    }
+
+    sendToRoom(room, event, data) {
+        this.server.to(room).emit(event, data);
     }
 
     addEventListeners(socket) {
