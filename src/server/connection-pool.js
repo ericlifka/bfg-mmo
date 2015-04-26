@@ -1,8 +1,9 @@
 import Auth from './auth';
 
 export default class ConnectionPool {
-    constructor() {
+    constructor(server) {
         this.connections = {};
+        this.server = server;
     }
 
     setEventDelegate(delegate) {
@@ -28,6 +29,30 @@ export default class ConnectionPool {
                 });
             }
         });
+    }
+
+    joinRoom(player, room) {
+        const socket = this.connections[player];
+        if (!socket) {
+            console.error(`No valid socket found for player ${player}`);
+            return;
+        }
+
+        socket.join(room);
+    }
+
+    sendToPlayer(player, event, data) {
+        const socket = this.connections[player];
+        if (!socket) {
+            console.error(`No valid socket found for player ${player}`);
+            return;
+        }
+
+        socket.emit(event, data);
+    }
+
+    sendToRoom(room, event, data) {
+        this.server.to(room).emit(event, data);
     }
 
     addEventListeners(socket) {
