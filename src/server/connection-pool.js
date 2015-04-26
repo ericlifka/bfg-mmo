@@ -30,6 +30,16 @@ export default class ConnectionPool {
         });
     }
 
+    sendToPlayer(player, event, data) {
+        const socket = this.connections[player];
+        if (!socket) {
+            console.error(`No valid socket found for player ${player}`);
+            return;
+        }
+
+        socket.emit(event, data);
+    }
+
     addEventListeners(socket) {
 
         socket.on('client-updates', (data) => {

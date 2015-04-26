@@ -24,17 +24,14 @@ export default class Game {
     }
 
     playerLoggedIn(playerName) {
-        this.initializePlayer(playerName);
         //TODO:
-        //  - put player in world
-        //  - send player world state
         //  - send player state / info to other players on next tick
-        const player = this.players[playerName];
+        const player = this.initializePlayer(playerName);
         const chunk = this.getPlayerChunk(playerName);
-        const socket = this.emitter.connections[playerName];
-        socket.emit('chunk-data', chunk.serialize());
-        socket.emit('player-data', player.serialize());
-        socket.emit('ready', {});
+
+        this.emitter.sendToPlayer(playerName, 'chunk-data', chunk.serialize());
+        this.emitter.sendToPlayer(playerName, 'player-data', player.serialize());
+        this.emitter.sendToPlayer(playerName, 'ready', {});
     }
 
     playerLoggedOut(playerName) {
@@ -47,13 +44,16 @@ export default class Game {
     processUpdates(player, updates) {
         _.each(updates, (update) => {
             const strategy = UpdateStrategies[update.type];
-            if (strategy) {
-                strategy.call(this, player, update.description);
-            } else {
+            if (!strategy) {
                 console.error(`Encountered update type without valid strategy: ${update.type}`);
+                return;
             }
+
+            strategy.call(this, player, update.description);
         });
     }
+
+    // internal
 
     loadChunk(id) {
         if (!this.chunks[id]) {
@@ -67,24 +67,20 @@ export default class Game {
         return this.chunks[chunkName];
     }
 
-    // internal
-
     initializePlayer(playerName) {
-        let player = null;
-        if (!this.players[playerName]) {
+        let player = this.players[playerName];
+        if (!player) {
             let position = {x: 100, y: 100};
             const chunkName = 'spawn';
             player = new Player(playerName, chunkName, position);
             this.players[playerName] = player;
-        } else {
-            player = this.players[playerName];
         }
 
         player.loggedIn = true;
-
         const chunk = this.loadChunk(player.chunk);
-
         chunk.players.add(playerName);
+
+        return player;
     }
 
     updateTick(dTime) {
