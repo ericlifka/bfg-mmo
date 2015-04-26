@@ -30,6 +30,16 @@ export default class ConnectionPool {
         });
     }
 
+    joinRoom(player, room) {
+        const socket = this.connections[player];
+        if (!socket) {
+            console.error(`No valid socket found for player ${player}`);
+            return;
+        }
+
+        socket.join(room);
+    }
+
     sendToPlayer(player, event, data) {
         const socket = this.connections[player];
         if (!socket) {

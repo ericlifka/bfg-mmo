@@ -27,10 +27,11 @@ export default class Game {
         //TODO:
         //  - send player state / info to other players on next tick
         const player = this.initializePlayer(playerName);
-        const chunk = this.getPlayerChunk(playerName);
-
-        this.emitter.sendToPlayer(playerName, 'chunk-data', chunk.serialize());
         this.emitter.sendToPlayer(playerName, 'player-data', player.serialize());
+
+        const chunk = this.getPlayerChunk(playerName);
+        this.playerEnteredChunk(player, chunk);
+
         this.emitter.sendToPlayer(playerName, 'ready', {});
     }
 
@@ -60,6 +61,11 @@ export default class Game {
             this.chunks[id] = new Chunk(id);
         }
         return this.chunks[id];
+    }
+
+    playerEnteredChunk(player, chunk) {
+        this.emitter.sendToPlayer(player.name, 'chunk-data', chunk.serialize());
+        this.emitter.joinRoom(player.name, chunk.id);
     }
 
     getPlayerChunk(playerName) {
