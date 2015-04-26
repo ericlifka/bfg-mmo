@@ -38,7 +38,7 @@ export default class ChunkGenerator {
 
     // Starting of with a basic Voronoi
     generateAreas() {
-        let areaCount = 20;
+        let areaCount = 50;
         for (let i = 0; i < areaCount; i++) {
             let x = Math.round(Math.random() * this.width) + this.offsetX;
             let y = Math.round(Math.random() * this.height) + this.offsetY;

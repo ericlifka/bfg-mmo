@@ -1,7 +1,8 @@
+import Entity from './entity';
 import Connection from './connection';
 import PlayerMoveCommand from './command/player-move';
 
-class Player {
+export default class Player extends Entity {
     // Things to track (as related to renderable entity):
     //   orientation
     //   world position
@@ -10,19 +11,10 @@ class Player {
     //   player state
 
     constructor(game, data) {
-        this.game = game;
-        this.sprite = null;
-        this.position = data.position;
-        this.orientation = 0; // TODO: need enumarted cardinal directions
-
+        super(game, data);
+        this.name = data.name;
         this.velocity = 1000;
-
         this.moving = false;
-        this.bindSprites(data);
-    }
-
-    bindSprites(data) {
-        this.sprite = new PIXI.Sprite.fromImage(data.image);
     }
 
     getVelocity(timeRatio) {
@@ -40,11 +32,13 @@ class Player {
         // Update
         if (inputState.right || inputState.left ||
                 inputState.up || inputState.down) {
-            // cancel ongoing move commands
             let velocity = this.getVelocity(timeRatio);
             let newX = this.position.x;
             let newY = this.position.y;
+
+            // cancel ongoing move commands
             this.moveCommand = null;
+
             if (inputState.right) {
                 newX = this.position.x + velocity;
             } else if (inputState.left) {
@@ -74,5 +68,3 @@ class Player {
         }
     }
 }
-
-export default Player;

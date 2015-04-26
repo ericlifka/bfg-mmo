@@ -1,5 +1,12 @@
 const socketConnectionString = () => '//' + document.domain + ':'  + '3000';
 
+const TEST_USERS = [
+    "walter",
+    "eric",
+    "dennis",
+    "jesse"
+];
+
 class ConnectionManager {
     constructor() {
         this.queue = [];
@@ -11,6 +18,8 @@ class ConnectionManager {
 
     connect(game) {
         this.game = game;
+        this.game.accountName = TEST_USERS[_.random(TEST_USERS.length-1)];
+        console.log(`Connecting as ${this.game.accountName}`);
         // I put this separate from the constructor because I'm assuming we'll
         // need authentication logic at some point in the near future and I
         // didn't want that tied to the module being created.
@@ -23,18 +32,16 @@ class ConnectionManager {
                 });
 
                 this.socket.emit('authorize', {
-                    username: 'eric',
+                    username: this.game.accountName,
                     password: '1234'
                 });
             });
 
-            this.socket.on('chunk-data', (chunkData) => {
-                game.loadChunk(chunkData);
-            });
-
-            this.socket.on('player-data', (playerData) => {
-                game.initializePlayer(playerData);
-            });
+            this.socket.on('chunk-data', _.bind(game.loadChunk, game));
+            this.socket.on('player-data', _.bind(game.initializePlayer, game));
+            this.socket.on('player-enter', _.bind(game.playerEnter, game));
+            this.socket.on('player-exit', _.bind(game.playerExit, game));
+            this.socket.on('chunk-updates', _.bind(game.chunkUpdates, game));
 
             this.socket.on('ready', () => {
                 game.worldReady = true;

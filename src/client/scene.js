@@ -3,15 +3,37 @@ import Camera from './camera';
 export default class Scene {
     constructor(game, width, height) {
         this.game = game;
+        this.stage = game.stage;
         this.width = width;
         this.height = height;
 
         this.trackingEntity = null;
         this.camera = new Camera(width, height);
+        this.playerLayer = new PIXI.DisplayObjectContainer();
+        this.mapLayer = new PIXI.DisplayObjectContainer();
+
+        this.stage.addChild(this.mapLayer);
+        this.stage.addChild(this.playerLayer);
     }
 
     setTrackingEntity(entity) {
         this.trackingEntity = entity;
+    }
+
+    addEntity(entity) {
+        this.playerLayer.addChild(entity.sprite);
+    }
+
+    removeEntity(entity) {
+        let removed = this.playerLayer.removeChild(entity.sprite);
+    }
+
+    addTile(tile) {
+        this.mapLayer.addChild(tile.sprite);
+    }
+
+    removeTile(tile) {
+        this.mapLayer.removeChlid(tile.sprite);
     }
 
     update() {

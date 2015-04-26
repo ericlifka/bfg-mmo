@@ -3,6 +3,7 @@ import Level from './level';
 import Scene from './scene';
 import Player from './player';
 import Connection from './connection';
+import RemotePlayer from './remote-player';
 
 class Game {
 
@@ -25,6 +26,7 @@ class Game {
 
         this.entities = [];
         this.player = null;
+        this.players = {};
         this.currentLevel = null;
 
         this.worldReady = false;
@@ -59,14 +61,53 @@ class Game {
         this.scene.setTrackingEntity(this.player);
     }
 
+    playerEnter(playerData) {
+        // maybe need to figure out better event filtering
+        if (playerData.name !== this.accountName) {
+            console.log(`Loading data for ${playerData.name}`);
+            let player = new RemotePlayer(this, playerData);
+            this.players[player.name] = player;
+            this.addEntity(player);
+        }
+    }
+
+    playerExit(playerName) {
+        if (playerName !== this.accountName) {
+            console.log(`Received exiting event for ${playerName}`);
+            let player = this.players[playerName];
+            if (player) {
+                this.removeEntity(player);
+                delete this.player[playerName];
+            }
+        }
+    }
+
+    chunkUpdates(updates) {
+        // console.log(updates);
+        _.each(updates.playerUpdates, (playerUpdateData, name) => {
+            let player = this.players[name];
+            if (!player) {
+                return;
+            }
+            if (playerUpdateData.position) {
+                player.position = playerUpdateData.position;
+            }
+        });
+    }
+
     addEntity(entity) {
         this.entities.push(entity);
-        this.stage.addChild(entity.sprite);
+        this.scene.addEntity(entity);
+    }
+
+    removeEntity(entity) {
+        this.scene.removeEntity(entity);
+        _.remove(this.entities, entity);
     }
 
     addLevel(level) {
         for (let tile of level.tiles) {
-            this.stage.addChild(tile.sprite);
+            this.scene.addTile(tile);
         }
     }
 
