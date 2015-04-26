@@ -1,6 +1,7 @@
 import Game from './client/game';
+import Auth from './client/auth';
 
 const game = new Game(document.body);
-game.start();
+Auth.authenticate(() => game.start());
 
 export default game;
