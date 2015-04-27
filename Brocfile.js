@@ -55,5 +55,6 @@ module.exports = mergeTrees([
     html,
     styles,
     browserifyTree,
-    concatenatedVendor
+    concatenatedVendor,
+    funnel('bower_components', {srcDir: 'pixi.js/bin', include: ['pixi.js.map']})
 ]);
