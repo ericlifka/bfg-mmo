@@ -8,13 +8,9 @@ const UpdateStrategies = {
         const player = this.players[playerName];
         if (!player) {
             console.log(`Player not on the server ${player}`);
+            return;
         }
 
-        // QUESTION:
-        // Are incoming events processed realtime and then the
-        // server loop broadcasts relevant changes or are the
-        // incoming events batched up in the "updates" queue
-        // and then processed all at once?
         player.move({x, y});
     }
 };
