@@ -41,7 +41,7 @@ class ConnectionManager {
         });
 
         if (!this.interval) {
-            this.interval = window.setInterval(() => this.processQueue(), 100);
+            this.interval = window.setInterval(() => this.processQueue(), 50);
         }
     }
 

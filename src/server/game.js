@@ -30,7 +30,7 @@ export default class Game {
     }
 
     startUpdateLoop() {
-        GameLoop.run(100, dTime => this.updateTick(dTime));
+        GameLoop.run(50, dTime => this.updateTick(dTime));
     }
 
     playerLoggedIn(playerName) {
