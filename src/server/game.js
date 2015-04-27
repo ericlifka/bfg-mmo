@@ -34,8 +34,6 @@ export default class Game {
     }
 
     playerLoggedIn(playerName) {
-        //TODO:
-        //  - send player state / info to other players on next tick
         const player = this.initializePlayer(playerName);
         this.emitter.sendToPlayer(playerName, 'player-data', player.serialize());
 
