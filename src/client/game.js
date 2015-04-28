@@ -1,14 +1,17 @@
+import Connection from './connection';
 import Input from './input';
 import Level from './level';
-import Scene from './scene';
 import Player from './player';
-import Connection from './connection';
 import RemotePlayer from './remote-player';
+import RenderLoop from './render-loop';
+import Scene from './scene';
 
 class Game {
 
     constructor(viewport) {
         Connection.game = this;
+        this.renderLoop = new RenderLoop();
+        this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));
 
         this.player = null;
         this.viewport = viewport;
@@ -49,7 +52,7 @@ class Game {
 
         PIXI.loader.load(() => {
             Connection.connect(() => {
-                this.startGameLoop();
+                this.renderLoop.start();
             });
         });
     }
@@ -113,16 +116,6 @@ class Game {
         for (let tile of level.tiles) {
             this.scene.addTile(tile);
         }
-    }
-
-    startGameLoop() {
-        let browserFrameHook = () => {
-            this.nextAnimationFrame();
-            requestAnimationFrame(browserFrameHook);
-        };
-
-        this.lastTimeStamp = Date.now();
-        requestAnimationFrame(browserFrameHook);
     }
 
     nextAnimationFrame() {
