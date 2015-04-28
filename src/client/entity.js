@@ -1,6 +1,7 @@
 export default class Entity {
     constructor(game, data) {
         this.game = game;
+        this.connection = game.connection;  // TODO: Is this too janky of a way of accessing the connection?
         this.sprite = null;
         this.position = data.position;
         this.orientation = 0; // TODO: need enumarted cardinal directions

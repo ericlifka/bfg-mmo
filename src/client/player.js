@@ -25,7 +25,7 @@ export default class Player extends Entity {
         this.position.x = pos.x;
         this.position.y = pos.y;
 
-        Connection.sendEvent('player-move', this.position);
+        this.connection.sendEvent('player-move', this.position);
     }
 
     update(timeRatio, inputState) {

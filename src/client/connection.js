@@ -2,13 +2,13 @@ import Auth from './auth';
 
 const socketConnectionString = () => '//' + document.domain + ':'  + '3000';
 
-class ConnectionManager {
-    constructor() {
+export default class Connection {
+    // TODO: I don't feel that a connection should have to know about a game, maybe subscribing externally would be cleaner
+    constructor(game) {
         this.queue = [];
         this.socket = null;
         this.connectionLive = false;
-        this.interval = null;
-        this.game = null;
+        this.game = game;
     }
 
     connect(authCallback) {
@@ -65,5 +65,3 @@ class ConnectionManager {
         }
     }
 }
-
-export default new ConnectionManager();

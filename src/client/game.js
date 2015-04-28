@@ -9,12 +9,11 @@ import Scene from './scene';
 class Game {
 
     constructor(viewport) {
-        Connection.game = this;
+        this.connection = new Connection(this);
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));
-        this.renderLoop.addFrameHandler(Connection.getFlushHook(), 50);
+        this.renderLoop.addFrameHandler(this.connection.getFlushHook(), 50);
 
-        this.player = null;
         this.viewport = viewport;
         this.assetPaths = [
             'sprites/wizard_girl.png',
@@ -22,7 +21,7 @@ class Game {
         ];
 
         this.renderer = new PIXI.WebGLRenderer(1024, 576);
-        this.stage = new PIXI.Container(0xdfdfdf, true); // PIXI.Stage(0xdfdfdf, true);
+        this.stage = new PIXI.Container(0xdfdfdf, true);
         this.scene = new Scene(this, 1024, 576);
         this.input = new Input(this.stage);
 
@@ -52,7 +51,7 @@ class Game {
         }
 
         PIXI.loader.load(() => {
-            Connection.connect(() => {
+            this.connection.connect(() => {
                 this.renderLoop.start();
             });
         });
