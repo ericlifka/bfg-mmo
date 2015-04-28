@@ -118,8 +118,7 @@ class Game {
         }
     }
 
-    nextAnimationFrame() {
-        let elapsed = this.elapsedSinceLastFrame();
+    nextAnimationFrame(dTime) {
         // FIXME: Temp hack to filter out an invalid state
         // really this would be a client state that is set
         // when the appropriate server data has been loaded
@@ -129,7 +128,7 @@ class Game {
             // Server data loaded
             let inputState = this.input.getFrameState();
             for (let entity of this.entities) {
-                entity.update(elapsed, inputState);
+                entity.update(dTime, inputState);
             }
             this.scene.update();
             this.renderer.render(this.stage);
@@ -137,13 +136,6 @@ class Game {
         } else {
             // Waiting for server data
         }
-    }
-
-    elapsedSinceLastFrame() {
-        let now = Date.now();
-        let elapsed = now - this.lastTimeStamp;
-        this.lastTimeStamp = now;
-        return elapsed;
     }
 }
 

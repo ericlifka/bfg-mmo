@@ -28,9 +28,14 @@ export default class RenderLoop {
     }
 
     frame() {
+        const now = Date.now();
+        const elapsed = now - this.lastTimeStamp;
+
         for (let handler of this.handlers) {
-            handler();
+            handler(elapsed);
         }
+
+        this.lastTimeStamp = now;
     }
 
 }
