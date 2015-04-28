@@ -24,18 +24,52 @@ export default class RenderLoop {
     }
 
     addFrameHandler(handler, delay = 0) {
-        this.handlers.push(handler);
+        if (delay) {
+            this.handlers.push({
+                immediate: false,
+                handler,
+                delay,
+                elapsed: 0
+            });
+        } else {
+            this.handlers.push({
+                immediate: true,
+                handler
+            });
+        }
     }
 
     frame() {
         const now = Date.now();
-        const elapsed = now - this.lastTimeStamp;
+        const dTime = now - this.lastTimeStamp;
 
         for (let handler of this.handlers) {
-            handler(elapsed);
+            this.invokeHandler(handler, dTime);
         }
 
         this.lastTimeStamp = now;
+    }
+
+    invokeHandler(handler, dTime) {
+        if (handler.immediate) {
+            handler.handler(dTime);
+        }
+        else {
+            // For non-immediate handlers we add the frame's elapsed time to the total elapsed and
+            // check if we've passed the threshold. If we have we invoke the handler and reset the elapsed counter.
+            handler.elapsed += dTime;
+
+            if (handler.elapsed >= handler.delay) {
+                const elapsed = handler.elapsed;
+
+                // By subtracting the delay we take into account if we overshoot the handler by a large amount,
+                // allowing the next trigger to be proportionally sooner. This makes the elapsed trigger time less
+                // accurate but keeps the overall clock more 'regular'.
+                handler.elapsed -= handler.delay;
+
+                handler.handler(elapsed);
+            }
+        }
     }
 
 }

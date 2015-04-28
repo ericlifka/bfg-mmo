@@ -12,6 +12,7 @@ class Game {
         Connection.game = this;
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));
+        this.renderLoop.addFrameHandler(Connection.getFlushHook(), 50);
 
         this.player = null;
         this.viewport = viewport;

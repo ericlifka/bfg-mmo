@@ -39,10 +39,12 @@ class ConnectionManager {
         this.socket.on('ready', () => {
             game.worldReady = true;
         });
+    }
 
-        if (!this.interval) {
-            this.interval = window.setInterval(() => this.processQueue(), 50);
-        }
+    getFlushHook() {
+        return () => {
+            this.processQueue();
+        };
     }
 
     sendEvent(event, payload) {
