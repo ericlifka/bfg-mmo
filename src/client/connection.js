@@ -1,6 +1,7 @@
 import Auth from './auth';
 
-const socketConnectionString = () => '//' + document.domain + ':' + '3000';
+const PORT = 3000; // config this value eventually
+const socketConnectionString = () => `//${document.domain}:${PORT}`;
 
 export default class Connection {
     // TODO: I don't feel that a connection should have to know about a game, maybe subscribing externally would be cleaner
