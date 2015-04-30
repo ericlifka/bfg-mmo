@@ -9,12 +9,13 @@ import Scene from './scene';
 class Game {
 
     constructor(viewport) {
-        this.connection = new Connection(this);
-        this.connection.subscribe('chunk-data', _.bind(this.loadChunk, this));
-        this.connection.subscribe('player-data', _.bind(this.initializePlayer, this));
-        this.connection.subscribe('player-enter', _.bind(this.playerEnter, this));
-        this.connection.subscribe('player-exit', _.bind(this.playerExit, this));
-        this.connection.subscribe('chunk-updates', _.bind(this.chunkUpdates, this));
+        const conn = this.connection = new Connection(this);
+        conn.subscribe('chunk-data', _.bind(this.loadChunk, this));
+        conn.subscribe('player-data', _.bind(this.initializePlayer, this));
+        conn.subscribe('player-enter', _.bind(this.playerEnter, this));
+        conn.subscribe('player-exit', _.bind(this.playerExit, this));
+        conn.subscribe('chunk-updates', _.bind(this.chunkUpdates, this));
+        conn.subscribe('ready', () => this.worldReady = true);
 
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));

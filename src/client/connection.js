@@ -11,15 +11,15 @@ export default class Connection {
         this.socket = null;
         this.connectionLive = false;
         this.game = game;
+
+        this.subscribe('disconnect', () => this.connectionLive = false);
     }
 
     connect(authCallback) {
         const game = this.game;
 
         if (!this.socket) {
-            this.socket = io(socketConnectionString());
-
-            this.subscribeToSocketEvents();
+            this.socket = this.subscribeToSocketEvents(io(socketConnectionString()));
         }
 
         this.socket.on('connect', () => {
@@ -28,14 +28,6 @@ export default class Connection {
                 game.accountName = username;
                 authCallback();
             });
-        });
-
-        this.socket.on('disconnect', () => {
-            this.connectionLive = false;
-        });
-
-        this.socket.on('ready', () => {
-            game.worldReady = true;
         });
     }
 
@@ -71,9 +63,11 @@ export default class Connection {
         }
     }
 
-    subscribeToSocketEvents() {
+    subscribeToSocketEvents(socket) {
         this.handlers.forEach(({event, handler}) => {
-            this.socket.on(event, handler);
+            socket.on(event, handler);
         });
+
+        return socket;
     }
 }
