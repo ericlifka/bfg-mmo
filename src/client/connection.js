@@ -7,6 +7,7 @@ export default class Connection {
     // TODO: I don't feel that a connection should have to know about a game, maybe subscribing externally would be cleaner
     constructor(game) {
         this.queue = [];
+        this.handlers = [];
         this.socket = null;
         this.connectionLive = false;
         this.game = game;
@@ -18,7 +19,7 @@ export default class Connection {
         if (!this.socket) {
             this.socket = io(socketConnectionString());
 
-            subscribeToSocketEvents();
+            this.subscribeToSocketEvents();
         }
 
         this.socket.on('connect', () => {
@@ -32,12 +33,6 @@ export default class Connection {
         this.socket.on('disconnect', () => {
             this.connectionLive = false;
         });
-
-        this.socket.on('chunk-data', _.bind(game.loadChunk, game));
-        this.socket.on('player-data', _.bind(game.initializePlayer, game));
-        this.socket.on('player-enter', _.bind(game.playerEnter, game));
-        this.socket.on('player-exit', _.bind(game.playerExit, game));
-        this.socket.on('chunk-updates', _.bind(game.chunkUpdates, game));
 
         this.socket.on('ready', () => {
             game.worldReady = true;

@@ -10,6 +10,12 @@ class Game {
 
     constructor(viewport) {
         this.connection = new Connection(this);
+        this.connection.subscribe('chunk-data', _.bind(this.loadChunk, this));
+        this.connection.subscribe('player-data', _.bind(this.initializePlayer, this));
+        this.connection.subscribe('player-enter', _.bind(this.playerEnter, this));
+        this.connection.subscribe('player-exit', _.bind(this.playerExit, this));
+        this.connection.subscribe('chunk-updates', _.bind(this.chunkUpdates, this));
+
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));
         this.renderLoop.addFrameHandler(this.connection.getFlushHook(), 50);
