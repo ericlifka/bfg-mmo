@@ -31,12 +31,6 @@ export default class Connection {
         });
     }
 
-    getFlushHook() {
-        return () => {
-            this.processQueue();
-        };
-    }
-
     subscribe(event, handler) {
         this.handlers.push({event, handler});
 

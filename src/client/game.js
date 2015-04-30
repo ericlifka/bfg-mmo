@@ -19,7 +19,7 @@ class Game {
 
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));
-        this.renderLoop.addFrameHandler(this.connection.getFlushHook(), 50);
+        this.renderLoop.addFrameHandler(dTime => this.connection.processQueue(), 50);
 
         this.viewport = viewport;
         this.assetPaths = [
