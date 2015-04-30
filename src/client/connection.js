@@ -4,20 +4,16 @@ const PORT = 3000; // config this value eventually
 const socketConnectionString = () => `//${document.domain}:${PORT}`;
 
 export default class Connection {
-    // TODO: I don't feel that a connection should have to know about a game, maybe subscribing externally would be cleaner
-    constructor(game) {
+    constructor() {
         this.queue = [];
         this.handlers = [];
         this.socket = null;
         this.connectionLive = false;
-        this.game = game;
 
         this.subscribe('disconnect', () => this.connectionLive = false);
     }
 
     connect(authCallback) {
-        const game = this.game;
-
         if (!this.socket) {
             this.socket = this.subscribeToSocketEvents(io(socketConnectionString()));
         }
@@ -25,8 +21,7 @@ export default class Connection {
         this.socket.on('connect', () => {
             Auth.authenticate(this.socket, (username) => {
                 this.connectionLive = true;
-                game.accountName = username;
-                authCallback();
+                authCallback(username);
             });
         });
     }

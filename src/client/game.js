@@ -58,7 +58,8 @@ class Game {
         }
 
         PIXI.loader.load(() => {
-            this.connection.connect(() => {
+            this.connection.connect(username => {
+                this.accountName = username;
                 this.renderLoop.start();
             });
         });
