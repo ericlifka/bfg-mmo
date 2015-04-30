@@ -1,6 +1,6 @@
 import Auth from './auth';
 
-const socketConnectionString = () => '//' + document.domain + ':'  + '3000';
+const socketConnectionString = () => '//' + document.domain + ':' + '3000';
 
 export default class Connection {
     // TODO: I don't feel that a connection should have to know about a game, maybe subscribing externally would be cleaner
@@ -16,6 +16,8 @@ export default class Connection {
 
         if (!this.socket) {
             this.socket = io(socketConnectionString());
+
+            subscribeToSocketEvents();
         }
 
         this.socket.on('connect', () => {
@@ -47,6 +49,14 @@ export default class Connection {
         };
     }
 
+    subscribe(event, handler) {
+        this.handlers.push({event, handler});
+
+        if (this.socket) {
+            this.socket.on(event, handler);
+        }
+    }
+
     sendEvent(event, payload) {
         this.queue.push({
             type: event,
@@ -63,5 +73,11 @@ export default class Connection {
                 updates: toSend
             });
         }
+    }
+
+    subscribeToSocketEvents() {
+        this.handlers.forEach(({event, handler}) => {
+            this.socket.on(event, handler);
+        });
     }
 }
