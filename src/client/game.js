@@ -18,7 +18,16 @@ class Game {
         conn.subscribe('ready', () => this.worldReady = true);
 
         this.renderLoop = new RenderLoop();
-        this.renderLoop.addFrameHandler(dTime => this.nextAnimationFrame(dTime));
+        this.renderLoop.addFrameHandler(dTime => {
+            // FIXME: Temp hack to filter out an invalid state
+            // really this would be a client state that is set
+            // when the appropriate server data has been loaded
+            // by the client and the client is ready to process
+            // local events.
+            if (this.worldReady) {
+                this.nextAnimationFrame(dTime);
+            }
+        });
         this.renderLoop.addFrameHandler(dTime => this.connection.processQueue(), 50);
 
         this.viewport = viewport;
@@ -98,13 +107,9 @@ class Game {
     }
 
     chunkUpdates(updates) {
-        // console.log(updates);
         _.each(updates.playerUpdates, (playerUpdateData, name) => {
-            let player = this.players[name];
-            if (!player) {
-                return;
-            }
-            if (playerUpdateData.position) {
+            const player = this.players[name];
+            if (player && playerUpdateData.position) {
                 player.position = playerUpdateData.position;
             }
         });
@@ -127,23 +132,13 @@ class Game {
     }
 
     nextAnimationFrame(dTime) {
-        // FIXME: Temp hack to filter out an invalid state
-        // really this would be a client state that is set
-        // when the appropriate server data has been loaded
-        // by the client and the client is ready to process
-        // local events.
-        if (this.worldReady) {
-            // Server data loaded
-            let inputState = this.input.getFrameState();
-            for (let entity of this.entities) {
-                entity.update(dTime, inputState);
-            }
-            this.scene.update();
-            this.renderer.render(this.stage);
-            this.input.click = null;
-        } else {
-            // Waiting for server data
+        let inputState = this.input.getFrameState();
+        for (let entity of this.entities) {
+            entity.update(dTime, inputState);
         }
+        this.scene.update();
+        this.renderer.render(this.stage);
+        this.input.click = null;
     }
 }
 
