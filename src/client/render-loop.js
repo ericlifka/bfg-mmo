@@ -2,6 +2,7 @@ export default class RenderLoop {
 
     constructor() {
         this.handlers = [];
+        this.frDisplay = createFrameRateDisplay();
     }
 
     start() {
@@ -71,5 +72,11 @@ export default class RenderLoop {
             }
         }
     }
+}
 
+function createFrameRateDisplay() {
+    const display = document.createElement('div');
+    display.className = "frame-rate-display";
+    document.body.appendChild(display);
+    return display;
 }
