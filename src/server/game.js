@@ -3,6 +3,8 @@ import Chunk from './chunk';
 import Player from './player';
 import GameLoop from './game-loop';
 
+const TICK_TIME = 50;
+
 const UpdateStrategies = {
     'player-move': function (playerName, {x, y}) {
         const player = this.players[playerName];
@@ -26,7 +28,7 @@ export default class Game {
     }
 
     startUpdateLoop() {
-        GameLoop.run(50, dTime => this.updateTick(dTime));
+        GameLoop.run(TICK_TIME, dTime => this.updateTick(dTime));
     }
 
     playerLoggedIn(playerName) {

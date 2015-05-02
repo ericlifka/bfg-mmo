@@ -3,6 +3,7 @@ import Input from './input';
 import Level from './level';
 import Player from './player';
 import RemotePlayer from './remote-player';
+import PlayerMoveCommand from './command/player-move.js';
 import RenderLoop from './render-loop';
 import Scene from './scene';
 
@@ -110,7 +111,8 @@ class Game {
         _.each(updates.playerUpdates, (playerUpdateData, name) => {
             const player = this.players[name];
             if (player && playerUpdateData.position) {
-                player.position = playerUpdateData.position;
+                player.setMoveCommand(new PlayerMoveCommand(player, playerUpdateData.position));
+                // player.position = playerUpdateData.position;
             }
         });
     }

@@ -1,9 +1,21 @@
 import Command from './command';
 
 class PlayerMoveCommand extends Command {
-    constructor(entity, x, y) {
+    constructor(entity, pos) {
         super(entity);
-        this.target = {x: x, y: y};
+        this.target = pos;
+
+        let len = this.getDistance();
+        // Travel distance divided by step where step is sterver tick over frame tick... maybe?
+        this.velocity = len / (50 / 20);
+    }
+
+    getDistance() {
+        let pos1 = this.entity.position;
+        let pos2 = this.target;
+        let dx = pos2.x - pos1.x;
+        let dy = pos2.y - pos1.y;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     // TODO: Move to a MathUtils?
@@ -11,7 +23,9 @@ class PlayerMoveCommand extends Command {
         return ((f1 < f2 + tolerance) && (f1 > f2 - tolerance));
     }
 
-    travelSegment(timeRatio, pos1, pos2) {
+    travelSegment(timeRatio) {
+        let pos1 = this.entity.position;
+        let pos2 = this.target;
         let dx = pos2.x - pos1.x;
         let dy = pos2.y - pos1.y;
         let len = Math.sqrt(dx * dx + dy * dy);
@@ -19,9 +33,7 @@ class PlayerMoveCommand extends Command {
             this.isDone = true;
             return pos2;
         }
-
-        let velocity = this.entity.getVelocity(timeRatio);
-        let travel = velocity / len;
+        let travel = this.velocity / len;
         if (travel > 1) {
             travel = 1;
         }
@@ -33,10 +45,10 @@ class PlayerMoveCommand extends Command {
     }
 
     execute(timeRatio) {
-        let newPos = this.travelSegment(
-            timeRatio, this.entity.position, this.target);
+        let newPos = this.travelSegment(timeRatio);
 
-        this.entity.updatePosition(newPos);
+        // this.entity.updatePosition(newPos);
+        this.entity.position = newPos;
 
         if (PlayerMoveCommand.fcmp(newPos.x, this.target.x, 0.5) &&
             PlayerMoveCommand.fcmp(newPos.y, this.target.y, 0.5)) {
