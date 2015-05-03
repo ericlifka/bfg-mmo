@@ -2,6 +2,10 @@ export default class RenderLoop {
 
     constructor() {
         this.handlers = [];
+        this.frameTimes = [];
+        this.currentFrame = 0;
+        this.runningTotal = 0;
+        this.frameRateBufferLength = 60;
         this.frDisplay = createFrameRateDisplay();
     }
 
@@ -43,6 +47,7 @@ export default class RenderLoop {
     frame() {
         const now = Date.now();
         const dTime = now - this.lastTimeStamp;
+        this.updateFrameRate(dTime);
 
         for (let handler of this.handlers) {
             this.invokeHandler(handler, dTime);
@@ -71,6 +76,15 @@ export default class RenderLoop {
                 handler.handler(elapsed);
             }
         }
+    }
+
+    updateFrameRate(dTime) {
+        this.runningTotal -= this.frameTimes[this.currentFrame] || 0;
+        this.runningTotal += dTime;
+        this.frameTimes[this.currentFrame] = dTime;
+        this.currentFrame = (this.currentFrame + 1) % this.frameRateBufferLength;
+        const frameRate = this.runningTotal / this.frameRateBufferLength;
+        console.log(frameRate);
     }
 }
 
