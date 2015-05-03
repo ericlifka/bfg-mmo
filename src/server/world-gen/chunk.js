@@ -1,16 +1,11 @@
 import ChunkGenerator from './chunk-generator';
+import spawn from './fixed-chunks/spawn';
 
 const TILE_TYPES = [
     'B03', 'F22'
 ];
 
-const FIXED_CHUNKS = {
-    spawn: {
-        generate() {
-            return [];
-        }
-    }
-};
+const FIXED_CHUNKS = { spawn };
 
 export default class Chunk {
     constructor(id) {
