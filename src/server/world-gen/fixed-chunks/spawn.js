@@ -17,6 +17,7 @@ export default {
 const TILE_SIZE = 32;
 
 function rowsToPositions(rows) {
+    rows.reverse();
     const tilePositions = [];
 
     for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
