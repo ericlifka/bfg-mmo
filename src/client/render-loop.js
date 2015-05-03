@@ -5,7 +5,7 @@ export default class RenderLoop {
         this.frameTimes = [];
         this.currentFrame = 0;
         this.runningTotal = 0;
-        this.frameRateBufferLength = 60;
+        this.frameRateBufferLength = 600;
         this.frDisplay = createFrameRateDisplay();
     }
 
@@ -83,7 +83,7 @@ export default class RenderLoop {
         this.runningTotal += dTime;
         this.frameTimes[this.currentFrame] = dTime;
         this.currentFrame = (this.currentFrame + 1) % this.frameRateBufferLength;
-        const averageFrameLength = this.runningTotal / this.frameRateBufferLength;
+        const averageFrameLength = this.runningTotal / this.frameTimes.length;
         const frameRate = 1000 / averageFrameLength;
         const fps = ("" + frameRate).substr(0, 4);
         this.frDisplay.innerHTML = `FPS: ${fps}`;
