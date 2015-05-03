@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Chunk from './chunk';
+import Chunk from './world-gen/chunk';
 import Player from './player';
 import GameLoop from './game-loop';
 

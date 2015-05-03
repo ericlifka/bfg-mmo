@@ -1,6 +1,6 @@
 import ChunkGenerator from './chunk-generator';
 
-let TILE_TYPES = [
+const TILE_TYPES = [
     'B03', 'F22'
 ];
 
