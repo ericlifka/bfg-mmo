@@ -24,5 +24,30 @@ export default {
         }
 
         return tilePositions;
+    },
+
+    padWithWater(rows = [], padNumber = 10) {
+        console.log('ROWS MOTHER FUCKER, DO YOU SPEAK THEM, ', rows);
+        if (rows.length === 0) {
+            rows.push([]);
+        }
+
+        // Insert rows of water at the top and bottom
+        const width = rows[0].length;
+        const gen = () => []; //(new Array(width)).fill('F22');
+        for (let rowPad = 0; rowPad < padNumber; rowPad++) {
+            rows.push(gen());
+            rows.unshift(gen());
+        }
+
+        // Add columns of water to both sides of all the rows
+        rows.forEach(row => {
+            for (let colPad = 0; colPad < padNumber; colPad++) {
+                row.push('F22');
+                row.unshift('F22');
+            }
+        });
+
+        return rows;
     }
 };
