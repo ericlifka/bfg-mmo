@@ -13,15 +13,6 @@ const tiles = [
 const Spawn = {
     generate() {
         return GenHelpers.rowsToPositions(GenHelpers.padWithWater(GenHelpers.stringsToRows(tiles)));
-        /*
-            Generator refactor goal:
-
-        return Chunk.newEmpty()
-            .fillSquare('grass', {width: 20, height: 20})
-            .addCoast()
-            .padWithWater(10);
-
-         */
     }
 };
 
