@@ -12,7 +12,7 @@ const tiles = [
 
 const Spawn = {
     generate() {
-        return GenHelpers.padWithWater(GenHelpers.rowsToPositions(tiles));
+        return GenHelpers.rowsToPositions(GenHelpers.padWithWater(GenHelpers.stringsToRows(tiles)));
     }
 };
 

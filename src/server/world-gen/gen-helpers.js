@@ -1,8 +1,11 @@
 const TILE_SIZE = 32;
 
 export default {
+    stringsToRows(strings) {
+        return strings.map(str => str.split(' '));
+    },
+
     rowsToPositions(rows) {
-        rows = rows.map(row => row.split(' ')); // Turn space delimited strings of tiles into arrays
         rows.reverse(); // flip the order to match bottom up world coords
 
         const tilePositions = [];
@@ -27,14 +30,13 @@ export default {
     },
 
     padWithWater(rows = [], padNumber = 10) {
-        console.log('ROWS MOTHER FUCKER, DO YOU SPEAK THEM, ', rows);
         if (rows.length === 0) {
             rows.push([]);
         }
 
         // Insert rows of water at the top and bottom
         const width = rows[0].length;
-        const gen = () => []; //(new Array(width)).fill('F22');
+        const gen = () => (new Array(width)).fill('F22');
         for (let rowPad = 0; rowPad < padNumber; rowPad++) {
             rows.push(gen());
             rows.unshift(gen());
