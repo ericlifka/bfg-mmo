@@ -2,7 +2,9 @@ const TILE_SIZE = 32;
 
 export default {
     rowsToPositions(rows) {
-        rows.reverse();
+        rows = rows.map(row => row.split(' ')); // Turn space delimited strings of tiles into arrays
+        rows.reverse(); // flip the order to match bottom up world coords
+
         const tilePositions = [];
 
         for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
