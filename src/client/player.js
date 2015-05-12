@@ -13,6 +13,7 @@ export default class Player extends Entity {
     constructor(game, data) {
         super(game, data);
         this.name = data.name;
+        this.setName(data.name);
         this.velocity = 1000;
         this.moving = false;
     }

@@ -1,3 +1,5 @@
+import Billboard from './billboard';
+
 export default class Entity {
     constructor(game, data) {
         this.game = game;
@@ -13,8 +15,33 @@ export default class Entity {
     }
 
     bindSprites(data) {
-        console.log(data.image);
+        this.billboard = new Billboard("", {
+            font: "normal 16px Arial",
+            fill: "white",
+            stroke: "black",
+            strokeThickness: 2
+        });
         this.sprite = new PIXI.Sprite.fromImage(data.image);
+    }
+
+    setName(name) {
+        this.billboard.setText(name);
+    }
+
+    addSprite(container) {
+        container.addChild(this.sprite);
+        this.billboard.addSprite(container);
+    }
+
+    removeSprite(container) {
+        container.removeChild(this.sprite);
+        this.billboard.removeSprite(container);
+    }
+
+    setSpritePosition(screenCoords) {
+        this.sprite.x = screenCoords.x;
+        this.sprite.y = screenCoords.y;
+        this.billboard.setSpritePosition({x: screenCoords.x, y: screenCoords.y - 24});
     }
 
     getVelocity(timeRatio) {

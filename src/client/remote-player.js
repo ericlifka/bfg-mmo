@@ -4,6 +4,7 @@ export default class RemotePlayer extends Entity {
     constructor(game, data) {
         super(game, data);
         this.name = data.name;
+        this.setName(this.name);
         this.moveCommand = null;
     }
 

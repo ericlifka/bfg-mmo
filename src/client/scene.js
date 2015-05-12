@@ -11,9 +11,11 @@ export default class Scene {
         this.camera = new Camera(width, height);
         this.playerLayer = new PIXI.Container();
         this.mapLayer = new PIXI.Container();
+        this.hudLayer = new PIXI.Container();
 
         this.stage.addChild(this.mapLayer);
         this.stage.addChild(this.playerLayer);
+        this.stage.addChild(this.hudLayer);
     }
 
     setTrackingEntity(entity) {
@@ -21,7 +23,7 @@ export default class Scene {
     }
 
     addEntity(entity) {
-        this.playerLayer.addChild(entity.sprite);
+        entity.addSprite(this.playerLayer);
     }
 
     removeEntity(entity) {
@@ -49,9 +51,12 @@ export default class Scene {
         }
 
         for (let entity of this.game.entities) {
-            let newCoords = this.camera.translateCoordinates(entity.position);
-            entity.sprite.x = Math.round(newCoords.x);
-            entity.sprite.y = Math.round(newCoords.y);
+            const pos = this.camera.translateCoordinates(entity.position);
+            const screenCoords = {
+                x: Math.round(pos.x),
+                y: Math.round(pos.y)
+            };
+            entity.setSpritePosition(screenCoords);
         }
     }
 }
