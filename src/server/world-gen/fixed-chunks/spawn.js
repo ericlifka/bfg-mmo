@@ -1,4 +1,5 @@
 import GenHelpers from '../gen-helpers';
+import ChunkBuilder from '../chunk-builder';
 
 const tiles = [
 'F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22 F22',
@@ -12,7 +13,15 @@ const tiles = [
 
 const Spawn = {
     generate() {
-        return GenHelpers.rowsToPositions(GenHelpers.padWithWater(GenHelpers.stringsToRows(tiles)));
+        return ChunkBuilder
+            .newEmpty()
+            .fillSquare('B03', {
+                width: 4,
+                height: 5
+            })
+            .generateChunk();
+
+        //return GenHelpers.rowsToPositions(GenHelpers.padWithWater(GenHelpers.stringsToRows(tiles)));
     }
 };
 
