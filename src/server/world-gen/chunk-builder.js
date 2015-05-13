@@ -11,6 +11,8 @@
 //          .padWithWater(10)
 //          .generateChunk();
 //
+const TILE_SIZE = 32;   // TODO: this should be configured with the tile set to be flexible
+
 class ChunkBuilder {
     // Static Initializers
     static newEmpty() {
@@ -46,7 +48,23 @@ class ChunkBuilder {
     }
 
     generateChunk() {
+        const tilePositions = [];
 
+        for (let x = 0; x < this.width; x++) {
+            for (let y = 0; y < this.height; y++) {
+                const cell = this.grid[x][y];
+
+                tilePositions.push({
+                    type: cell.tile,
+                    position: {
+                        x: x * TILE_SIZE,
+                        y: y * TILE_SIZE
+                    }
+                });
+            }
+        }
+
+        return tilePositions;
     }
 
     // Private helpers
