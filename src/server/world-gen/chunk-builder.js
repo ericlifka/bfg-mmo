@@ -57,11 +57,17 @@ class ChunkBuilder {
     }
 
     addEmptyRow() {
-
+        const row = [];
+        for (let i = 0; i < this.width; i++) {
+            row.push(new Cell());
+        }
+        this.grid.push(row);
+        this.height++;
     }
 
     addEmptyColumn() {
-
+        this.grid.forEach(row => row.push(new Cell()));
+        this.width++;
     }
 }
 
