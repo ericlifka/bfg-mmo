@@ -37,14 +37,16 @@ class ChunkBuilder {
                 this.grid[y][x].tile = tileType;
             }
         }
+
+        return this;
     }
 
     addCoast() {
-
+        return this;
     }
 
     padWithWater(paddingDepth = 1) {
-
+        return this;
     }
 
     generateChunk() {
