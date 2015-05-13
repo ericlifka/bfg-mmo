@@ -19,15 +19,21 @@ class ChunkBuilder {
 
     // Modifier API
     fillSquare(tileType, {top = 0, left = 0, width = 1, height = 1} = {}) { // jshint ignore:line
-        const minWidth = left + width;
-        const minHeight = top + height;
+        const totalWidth = left + width;
+        const totalHeight = top + height;
 
-        while (this.height < minHeight) {
+        while (this.height < totalHeight) {
             this.addEmptyRow();
         }
 
-        while (this.width < minWidth) {
+        while (this.width < totalWidth) {
             this.addEmptyColumn();
+        }
+
+        for (let x = left; x < totalWidth; x++) {
+            for (let y = top; y < totalHeight; y++) {
+                this.grid[x][y].tile = tileType;
+            }
         }
     }
 
