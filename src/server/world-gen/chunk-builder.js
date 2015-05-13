@@ -34,7 +34,7 @@ class ChunkBuilder {
 
         for (let x = left; x < totalWidth; x++) {
             for (let y = top; y < totalHeight; y++) {
-                this.grid[x][y].tile = tileType;
+                this.grid[y][x].tile = tileType;
             }
         }
     }
@@ -52,7 +52,7 @@ class ChunkBuilder {
 
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                const cell = this.grid[x][y];
+                const cell = this.grid[y][x];
 
                 tilePositions.push({
                     type: cell.tile,
