@@ -9,7 +9,7 @@
 //          .fillSquare('grass', {width: 20, height: 20})
 //          .addCoast()
 //          .padWithWater(10)
-//          .generate();
+//          .generateChunk();
 //
 class ChunkBuilder {
     // Static Initializers
@@ -18,6 +18,21 @@ class ChunkBuilder {
     }
 
     // Modifier API
+    fillSquare(tileType, {top = 0, left = 0, width = 1, height = 1} = {}) { // jshint ignore:line
+
+    }
+
+    addCoast() {
+
+    }
+
+    padWithWater(paddingDepth = 1) {
+
+    }
+
+    generateChunk() {
+
+    }
 
     // Private helpers
     constructor() {
