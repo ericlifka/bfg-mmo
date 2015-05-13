@@ -19,7 +19,16 @@ class ChunkBuilder {
 
     // Modifier API
     fillSquare(tileType, {top = 0, left = 0, width = 1, height = 1} = {}) { // jshint ignore:line
+        const minWidth = left + width;
+        const minHeight = top + height;
 
+        while (this.height < minHeight) {
+            this.addEmptyRow();
+        }
+
+        while (this.width < minWidth) {
+            this.addEmptyColumn();
+        }
     }
 
     addCoast() {
@@ -36,7 +45,17 @@ class ChunkBuilder {
 
     // Private helpers
     constructor() {
+        this.width = 0;
+        this.height = 0;
         this.grid = [[]];   // initialize to a 0x0 matrix
+    }
+
+    addEmptyRow() {
+
+    }
+
+    addEmptyColumn() {
+
     }
 }
 
