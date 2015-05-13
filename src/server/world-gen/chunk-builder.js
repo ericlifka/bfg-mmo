@@ -36,6 +36,12 @@ class ChunkBuilder {
 
     // Private helpers
     constructor() {
+        this.grid = [[]];   // initialize to a 0x0 matrix
+    }
+}
+
+class Cell {
+    constructor() {
 
     }
 }
