@@ -67,7 +67,9 @@ class ChunkBuilder {
 
 class Cell {
     constructor() {
-
+        this.tile = null;
+        this.clutter = null;    // not implemented
+        this.passable = true;   // not implemented
     }
 }
 
