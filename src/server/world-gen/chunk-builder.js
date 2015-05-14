@@ -45,6 +45,7 @@ class ChunkBuilder {
         // TODO: This is very locked into the one tileset, we should generalize this sort of logic at some point
 
 
+
         return this;
     }
 
@@ -79,7 +80,7 @@ class ChunkBuilder {
         this.grid = [[]];   // initialize to a 0x0 matrix
     }
 
-    addRow(tile = null) {
+    addRow(atTop = false, tile = null) {
         const row = [];
         for (let i = 0; i < this.width; i++) {
             row.push(new Cell(tile));
@@ -88,8 +89,12 @@ class ChunkBuilder {
         this.height++;
     }
 
-    addColumn(tile = null) {
-        this.grid.forEach(row => row.push(new Cell(tile)));
+    addColumn(atFront = false, tile = null) {
+        this.grid.forEach(
+            atFront ?
+                row => row.unshift(new Cell(tile)) :
+                row => row.push(new Cell(tile))
+        );
         this.width++;
     }
 }
