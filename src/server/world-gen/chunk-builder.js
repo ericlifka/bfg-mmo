@@ -85,7 +85,13 @@ class ChunkBuilder {
         for (let i = 0; i < this.width; i++) {
             row.push(new Cell(tile));
         }
-        this.grid.push(row);
+
+        if (atTop) {
+            this.grid.unshift(row);
+        } else {
+            this.grid.push(row);
+        }
+
         this.height++;
     }
 
