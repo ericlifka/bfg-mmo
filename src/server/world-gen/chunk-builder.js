@@ -85,9 +85,9 @@ class ChunkBuilder {
 
     // Private helpers
     constructor() {
-        this.width = 0;
+        this.width = 1;
         this.height = 1;
-        this.grid = [[]];   // initialize to a 1x0 matrix
+        this.grid = [[new Cell()]];   // initialize to a 1x1 matrix
     }
 
     addRow(atTop = false, tile = null) {
