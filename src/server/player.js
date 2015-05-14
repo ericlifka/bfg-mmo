@@ -1,10 +1,12 @@
 export default class Player {
-    constructor(name, chunk, position) {
+    constructor(name) {
         this.name = name;
-        this.chunk = chunk;
-        this.position = position;
         this.updates = {};
         this.loggedIn = false;
+
+        // needs to get set by a chunk before player can interact
+        this.chunk = null;
+        this.position = null;
     }
 
     move(position) {

@@ -37,8 +37,11 @@ export default class Chunk {
     }
 
     playerEntered(player) {
+        player.chunk = this.id;
         this.players.add(player);
-
+        if (!player.position) {
+            player.position = this.generator.playerStartPosition();
+        }
     }
 
     serialize() {

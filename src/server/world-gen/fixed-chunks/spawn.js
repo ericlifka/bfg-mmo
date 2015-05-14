@@ -10,7 +10,11 @@ const Spawn = {
             })
             .addCoast()
             .padWithWater(10)
-            .generateChunk()
+            .generateChunk(),
+
+    playerStartPosition() {
+        return {x: 100, y: 100};
+    }
 };
 
 export default Spawn;

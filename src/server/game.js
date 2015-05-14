@@ -98,16 +98,13 @@ export default class Game {
     initializePlayer(playerName) {
         let player = this.players[playerName];
         if (!player) {
-            const position = {x: 100, y: 100};
-            const chunkName = 'spawn';
-            player = new Player(playerName, chunkName, position);
+            player = new Player(playerName);
             this.players[playerName] = player;
         }
 
         player.loggedIn = true;
-        const chunk = this.loadChunk(player.chunk);
+        const chunk = this.loadChunk(player.chunk || 'spawn');
         chunk.playerEntered(player);
-        //chunk.players.add(playerName);
 
         return player;
     }

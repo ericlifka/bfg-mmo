@@ -88,5 +88,10 @@ export default class ChunkGenerator {
         this.generateTiles();
         return this.tileDefinitions;
     }
+
+    playerStartPosition() {
+        // TODO: make this be on land
+        return {x: 100, y: 100};
+    }
 }
 
