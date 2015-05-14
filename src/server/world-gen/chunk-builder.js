@@ -90,7 +90,6 @@ class ChunkBuilder {
     }
 
     addRow(atTop = false, tile = null) {
-        console.log('start', atTop, tile);
         const row = [];
         for (let i = 0; i < this.width; i++) {
             row.push(new Cell(tile));
@@ -103,7 +102,6 @@ class ChunkBuilder {
         }
 
         this.height++;
-        console.log(this.grid);
     }
 
     addColumn(atFront = false, tile = null) {
