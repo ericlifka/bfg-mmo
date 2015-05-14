@@ -25,11 +25,11 @@ class ChunkBuilder {
         const totalHeight = top + height;
 
         while (this.height < totalHeight) {
-            this.addEmptyRow();
+            this.addRow();
         }
 
         while (this.width < totalWidth) {
-            this.addEmptyColumn();
+            this.addColumn();
         }
 
         for (let x = left; x < totalWidth; x++) {
@@ -42,6 +42,9 @@ class ChunkBuilder {
     }
 
     addCoast() {
+        // TODO: This is very locked into the one tileset, we should generalize this sort of logic at some point
+
+
         return this;
     }
 
@@ -76,24 +79,24 @@ class ChunkBuilder {
         this.grid = [[]];   // initialize to a 0x0 matrix
     }
 
-    addEmptyRow() {
+    addRow(tile = null) {
         const row = [];
         for (let i = 0; i < this.width; i++) {
-            row.push(new Cell());
+            row.push(new Cell(tile));
         }
         this.grid.push(row);
         this.height++;
     }
 
-    addEmptyColumn() {
-        this.grid.forEach(row => row.push(new Cell()));
+    addColumn(tile = null) {
+        this.grid.forEach(row => row.push(new Cell(tile)));
         this.width++;
     }
 }
 
 class Cell {
-    constructor() {
-        this.tile = null;
+    constructor(tile) {
+        this.tile = tile;
         this.clutter = null;    // not implemented
         this.passable = true;   // not implemented
     }
