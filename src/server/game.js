@@ -35,7 +35,8 @@ export default class Game {
         const player = this.initializePlayer(playerName);
         this.emitter.sendToPlayer(playerName, 'player-data', player.serialize());
 
-        const chunk = this.getPlayerChunk(playerName);
+        const chunk = this.loadChunk(player.chunk || 'spawn');
+        chunk.playerEntered(player);
         this.playerEnteredChunk(player, chunk);
 
         this.emitter.sendToPlayer(playerName, 'ready', {});
@@ -103,8 +104,6 @@ export default class Game {
         }
 
         player.loggedIn = true;
-        const chunk = this.loadChunk(player.chunk || 'spawn');
-        chunk.playerEntered(player);
 
         return player;
     }
