@@ -44,6 +44,7 @@ class ChunkBuilder {
     addCoast() {
         // TODO: This is very locked into the one tileset, we should generalize this sort of logic at some point
 
+        // Grass to Shallow water transition
         this.addRow(true, 'H23');
         this.addRow(false, 'H25');
         this.addColumn(true,'G24');
@@ -52,6 +53,16 @@ class ChunkBuilder {
         this.bottomLeft().tile = 'G25';
         this.topRight().tile = 'I23';
         this.bottomRight().tile = 'I25';
+
+        // Shallow water to deep water transition
+        this.addRow(true, 'H19');
+        this.addRow(false, 'H17');
+        this.addColumn(true,'I18');
+        this.addColumn(false, 'G18');
+        this.topLeft().tile = 'C17';
+        this.bottomLeft().tile = 'A17';
+        this.topRight().tile = 'D17';
+        this.bottomRight().tile = 'B17';
 
         return this;
     }
