@@ -13,11 +13,9 @@ export default class Chunk {
         this.players = new Set();
         this.updates = [];
 
-        let generator;
         if (FIXED_CHUNKS.hasOwnProperty(id)) {
 
-            generator = FIXED_CHUNKS[id];
-            this.tiles = generator.generate();
+            this.generator = FIXED_CHUNKS[id];
 
         } else {
 
@@ -31,11 +29,16 @@ export default class Chunk {
                     y: (32 * -50)
                 }
             };
-            generator = new ChunkGenerator(TILE_TYPES, bounds);
+            this.generator = new ChunkGenerator(TILE_TYPES, bounds);
 
         }
 
-        this.tiles = generator.generate();
+        this.tiles = this.generator.generate();
+    }
+
+    playerEntered(player) {
+        this.players.add(player);
+
     }
 
     serialize() {

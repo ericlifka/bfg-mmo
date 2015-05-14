@@ -106,7 +106,8 @@ export default class Game {
 
         player.loggedIn = true;
         const chunk = this.loadChunk(player.chunk);
-        chunk.players.add(playerName);
+        chunk.playerEntered(player);
+        //chunk.players.add(playerName);
 
         return player;
     }
