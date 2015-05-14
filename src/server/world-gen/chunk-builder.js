@@ -44,7 +44,7 @@ class ChunkBuilder {
     addCoast() {
         // TODO: This is very locked into the one tileset, we should generalize this sort of logic at some point
 
-        //this.addRow(true, 'H23');
+        this.addRow(true, 'H23');
         this.addRow(false, 'H25');
         //this.addColumn(true,'G24');
         //this.addColumn(false, 'I24');
@@ -59,9 +59,13 @@ class ChunkBuilder {
     generateChunk() {
         const tilePositions = [];
 
+        // Grab a top level clone of the grid array and reverse it to match the inverted display coordinates used by the client for rendering.
+        const grid = this.grid.slice(0);
+        grid.reverse();
+
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                const cell = this.grid[y][x];
+                const cell = grid[y][x];
 
                 if (cell.tile) {
                     tilePositions.push({
