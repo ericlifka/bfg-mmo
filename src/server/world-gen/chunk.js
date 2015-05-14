@@ -33,7 +33,7 @@ export default class Chunk {
 
         }
 
-        this.tiles = this.generator.generate();
+        this.tiles = this.generator.getTileData();
     }
 
     playerEntered(player) {

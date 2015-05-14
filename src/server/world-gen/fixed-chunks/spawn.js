@@ -1,7 +1,7 @@
 import ChunkBuilder from '../chunk-builder';
 
 const Spawn = {
-    generate: () =>
+    getTileData: () =>
         ChunkBuilder
             .newEmpty()
             .fillSquare('B03', {

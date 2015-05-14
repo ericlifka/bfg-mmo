@@ -81,7 +81,8 @@ export default class ChunkGenerator {
         }
     }
 
-    generate() {
+    getTileData() {
+        // Generate chunk and return tile info
         this.checkBounds();
         this.generateAreas();
         this.generateTiles();
