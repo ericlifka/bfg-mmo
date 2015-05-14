@@ -44,10 +44,10 @@ class ChunkBuilder {
     addCoast() {
         // TODO: This is very locked into the one tileset, we should generalize this sort of logic at some point
 
-        this.addRow(true, 'H23');
+        //this.addRow(true, 'H23');
         this.addRow(false, 'H25');
-        this.addColumn(true,'G24');
-        this.addColumn(false, 'I24');
+        //this.addColumn(true,'G24');
+        //this.addColumn(false, 'I24');
 
         return this;
     }
@@ -63,13 +63,15 @@ class ChunkBuilder {
             for (let y = 0; y < this.height; y++) {
                 const cell = this.grid[y][x];
 
-                tilePositions.push({
-                    type: cell.tile,
-                    position: {
-                        x: x * TILE_SIZE,
-                        y: y * TILE_SIZE
-                    }
-                });
+                if (cell.tile) {
+                    tilePositions.push({
+                        type: cell.tile,
+                        position: {
+                            x: x * TILE_SIZE,
+                            y: y * TILE_SIZE
+                        }
+                    });
+                }
             }
         }
 
@@ -79,11 +81,12 @@ class ChunkBuilder {
     // Private helpers
     constructor() {
         this.width = 0;
-        this.height = 0;
-        this.grid = [[]];   // initialize to a 0x0 matrix
+        this.height = 1;
+        this.grid = [[]];   // initialize to a 1x0 matrix
     }
 
     addRow(atTop = false, tile = null) {
+        console.log('start', atTop, tile);
         const row = [];
         for (let i = 0; i < this.width; i++) {
             row.push(new Cell(tile));
@@ -96,6 +99,7 @@ class ChunkBuilder {
         }
 
         this.height++;
+        console.log(this.grid);
     }
 
     addColumn(atFront = false, tile = null) {
