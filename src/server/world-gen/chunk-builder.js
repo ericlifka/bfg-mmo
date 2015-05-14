@@ -57,6 +57,15 @@ class ChunkBuilder {
     }
 
     padWithWater(paddingDepth = 1) {
+        const water = 'F22';
+
+        for (let i = 0; i < paddingDepth; i++) {
+            this.addRow(true, water);
+            this.addRow(false, water);
+            this.addColumn(true, water);
+            this.addColumn(false, water);
+        }
+
         return this;
     }
 

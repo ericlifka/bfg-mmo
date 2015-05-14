@@ -20,6 +20,7 @@ const Spawn = {
                 height: 5
             })
             .addCoast()
+            .padWithWater()
             .generateChunk();
 
         //return GenHelpers.rowsToPositions(GenHelpers.padWithWater(GenHelpers.stringsToRows(tiles)));
