@@ -46,8 +46,8 @@ class ChunkBuilder {
 
         this.addRow(true, 'H23');
         this.addRow(false, 'H25');
-        //this.addColumn(true,'G24');
-        //this.addColumn(false, 'I24');
+        this.addColumn(true,'G24');
+        this.addColumn(false, 'I24');
 
         return this;
     }
