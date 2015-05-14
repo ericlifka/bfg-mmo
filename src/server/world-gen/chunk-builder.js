@@ -48,7 +48,10 @@ class ChunkBuilder {
         this.addRow(false, 'H25');
         this.addColumn(true,'G24');
         this.addColumn(false, 'I24');
-
+        this.topLeft().tile = 'G23';
+        this.bottomLeft().tile = 'G25';
+        this.topRight().tile = 'I23';
+        this.bottomRight().tile = 'I25';
 
         return this;
     }
