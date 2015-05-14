@@ -49,6 +49,7 @@ class ChunkBuilder {
         this.addColumn(true,'G24');
         this.addColumn(false, 'I24');
 
+
         return this;
     }
 
@@ -111,6 +112,22 @@ class ChunkBuilder {
                 row => row.push(new Cell(tile))
         );
         this.width++;
+    }
+
+    topLeft() {
+        return this.grid[0][0];
+    }
+
+    topRight() {
+        return this.grid[0][this.width - 1];
+    }
+
+    bottomLeft() {
+        return this.grid[this.height - 1][0];
+    }
+
+    bottomRight() {
+        return this.grid[this.height - 1][this.width - 1];
     }
 }
 
