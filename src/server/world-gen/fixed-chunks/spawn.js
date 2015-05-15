@@ -1,8 +1,8 @@
 import ChunkBuilder from '../chunk-builder';
 
 const Spawn = {
-    getTileData: () =>
-        ChunkBuilder
+    getTileData() {
+        return ChunkBuilder
             .newEmpty()
             .fillSquare('B03', {
                 width: 4,
@@ -10,7 +10,8 @@ const Spawn = {
             })
             .addCoast()
             .padWithWater(10)
-            .generateChunk(),
+            .generateChunk();
+    },
 
     playerStartPosition() {
         return {x: 100, y: 100};
