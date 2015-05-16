@@ -56,7 +56,8 @@ class ChunkBuilder {
 
         row(0, null, 'P03', 'S03', null);
         row(1, 'P03', 'P04', 'S04', 'S03');
-        row(2, 'P04', 'Q02', 'R02', 'S04');
+        row(2, 'P04', 'P04', 'S04', 'S04');
+        row(3, 'P04', 'Q02', 'R02', 'S04');
 
         return this;
     }
