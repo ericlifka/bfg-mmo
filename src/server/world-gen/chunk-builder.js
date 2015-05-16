@@ -54,23 +54,9 @@ class ChunkBuilder {
             });
         };
 
-        // first row
-        //tile(0, 1, 'P03');
-        //tile(0, 2, 'S03');
         row(0, null, 'P03', 'S03', null);
-
-        // second row
-        tile(1, 0, 'P03');
-        tile(1, 1, 'P04');
-        tile(1, 2, 'S04');
-        tile(1, 3, 'S03');
-
-        // third row
-        tile(2, 0, 'P04');
-        tile(2, 1, 'Q02');
-        tile(2, 2, 'R02');
-        tile(2, 3, 'S04');
-
+        row(1, 'P03', 'P04', 'S04', 'S03');
+        row(2, 'P04', 'Q02', 'R02', 'S04');
 
         return this;
     }
