@@ -7,6 +7,7 @@ const TICK_TIME = 50;
 
 const UpdateStrategies = {
     'player-move': function (playerName, {x, y}) {
+        console.log(`x:${x}, y:${y}`);
         const player = this.players[playerName];
         if (!player) {
             console.log(`Player not on the server ${player}`);

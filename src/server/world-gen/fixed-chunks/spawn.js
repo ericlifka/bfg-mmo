@@ -14,7 +14,7 @@ const Spawn = {
     },
 
     playerStartPosition() {
-        return {x: 100, y: 100};
+        return {x: 410, y: 965};
     }
 };
 
