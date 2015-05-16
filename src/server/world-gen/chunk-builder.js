@@ -57,6 +57,13 @@ class ChunkBuilder {
         tile(1, 2, 'S04');
         tile(1, 3, 'S03');
 
+        // third row
+        tile(2, 0, 'P04');
+        tile(2, 1, 'Q02');
+        tile(2, 2, 'R02');
+        tile(2, 3, 'S04');
+
+
         return this;
     }
 
