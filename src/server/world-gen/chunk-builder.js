@@ -46,10 +46,18 @@ class ChunkBuilder {
         const Y = y => y + top;
         const grid = (y, x) => this.grid[Y(y)][X(x)];
         const tile = (y, x, tile) => grid(y, x).tile = tile;
+        const row = (row, ...tiles) => {
+            tiles.forEach((t, i) => {
+                if (t) {
+                    tile(row, i, t);
+                }
+            });
+        };
 
         // first row
-        tile(0, 1, 'P03');
-        tile(0, 2, 'S03');
+        //tile(0, 1, 'P03');
+        //tile(0, 2, 'S03');
+        row(0, null, 'P03', 'S03', null);
 
         // second row
         tile(1, 0, 'P03');
