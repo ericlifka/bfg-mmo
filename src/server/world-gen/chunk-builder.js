@@ -44,11 +44,18 @@ class ChunkBuilder {
     addSimpleHouse(top = 0, left = 0) {
         const X = x => x + left;
         const Y = y => y + top;
-        const grid = (x, y) => this.grid[Y(y)][X(x)];
-        const tile = (x, y, tile) => grid(x, y).tile = tile;
+        const grid = (y, x) => this.grid[Y(y)][X(x)];
+        const tile = (y, x, tile) => grid(y, x).tile = tile;
 
+        // first row
         tile(0, 1, 'P03');
+        tile(0, 2, 'S03');
+
+        // second row
         tile(1, 0, 'P03');
+        tile(1, 1, 'P04');
+        tile(1, 2, 'S04');
+        tile(1, 3, 'S03');
 
         return this;
     }
