@@ -8,6 +8,7 @@ const Spawn = {
                 width: 40,
                 height: 20
             })
+            .addSimpleHouse(5, 5)
             .addCoast()
             .padWithWater(10)
             .generateChunk();

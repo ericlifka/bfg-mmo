@@ -41,6 +41,12 @@ class ChunkBuilder {
         return this;
     }
 
+    addSimpleHouse(top = 0, left = 0) {
+
+
+        return this;
+    }
+
     addCoast() {
         // TODO: This is very locked into the one tileset, we should generalize this sort of logic at some point
 
