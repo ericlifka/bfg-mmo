@@ -44,7 +44,7 @@ class ChunkBuilder {
     addSimpleHouse(top = 0, left = 0) {
         const X = x => x + left;
         const Y = y => y + top;
-        const grid = (x, y) => this.grid[y][x];
+        const grid = (x, y) => this.grid[Y(y)][X(x)];
 
 
 
