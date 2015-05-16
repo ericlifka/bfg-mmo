@@ -5,8 +5,8 @@ const Spawn = {
         return ChunkBuilder
             .newEmpty()
             .fillSquare('B03', {
-                width: 4,
-                height: 5
+                width: 40,
+                height: 20
             })
             .addCoast()
             .padWithWater(10)
