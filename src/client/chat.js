@@ -43,10 +43,13 @@ class Chat {
     }
 
     keyPress(event) {
-        if (event.keyCode === ENTER_KEY && !event.shiftKey) {
+        if (event.keyCode === ENTER_KEY) {
             event.preventDefault();
             event.stopPropagation();
-            // send message
+
+            const enteredText = this.input.value;
+            this.input.value = "";
+            console.log(`sending: ${enteredText}`);
         }
     }
 
