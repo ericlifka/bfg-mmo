@@ -1,3 +1,6 @@
+const ENTER_KEY = 13;
+const ESCAPE = 27;
+
 class Chat {
     constructor(connection, inputController) {
         this.connection = connection;
@@ -30,6 +33,7 @@ class Chat {
     addEventListeners() {
         this.connection.subscribe('chat-message', (...args) => this.newMessageEvent(...args));
         this.input.addEventListener('keypress', (...args) => this.keyPress(...args));
+        this.input.addEventListener('keyup', (...args) => this.keyUp(...args));
         this.input.addEventListener('focus', (...args) => this.focus(...args));
         this.input.addEventListener('blur', (...args) => this.blur(...args));
     }
@@ -39,7 +43,17 @@ class Chat {
     }
 
     keyPress(event) {
-        console.log('keyPress', arguments);
+        if (event.keyCode === ENTER_KEY && !event.shiftKey) {
+            event.preventDefault();
+            event.stopPropagation();
+            // send message
+        }
+    }
+
+    keyUp(event) {
+        if (event.keyCode === ESCAPE) {
+            // trigger blur
+        }
     }
 
     focus(event) {
