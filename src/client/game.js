@@ -6,6 +6,7 @@ import RemotePlayer from './remote-player';
 import PlayerMoveCommand from './command/player-move.js';
 import RenderLoop from './render-loop';
 import Scene from './scene';
+import Chat from './chat';
 
 class Game {
 
@@ -17,6 +18,8 @@ class Game {
         conn.subscribe('player-exit', _.bind(this.playerExit, this));
         conn.subscribe('chunk-updates', _.bind(this.chunkUpdates, this));
         conn.subscribe('ready', () => this.worldReady = true);
+
+        this.chat = new Chat(conn);
 
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => {
