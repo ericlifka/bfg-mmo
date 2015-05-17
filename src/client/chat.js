@@ -29,14 +29,24 @@ class Chat {
     addEventListeners() {
         this.connection.subscribe('chat-message', (...args) => this.newMessageEvent(...args));
         this.input.addEventListener('keypress', (...args) => this.keyPress(...args));
+        this.input.addEventListener('focus', (...args) => this.focus(...args));
+        this.input.addEventListener('blur', (...args) => this.blur(...args));
     }
 
     newMessageEvent() {
         console.log(arguments);
     }
 
-    keyPress() {
+    keyPress(event) {
         console.log('keyPress', arguments);
+    }
+
+    focus(event) {
+        console.log('focus', event);
+    }
+
+    blur(event) {
+        console.log('blur', event);
     }
 }
 
