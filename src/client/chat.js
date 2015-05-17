@@ -3,7 +3,7 @@ class Chat {
         this.connection = connection;
 
         this.createDocumentStructure();
-        this.connection.subscribe('chat-message', (...args) => this.newMessageEvent(...args));
+        this.addEventListeners();
     }
 
     createDocumentStructure() {
@@ -18,13 +18,25 @@ class Chat {
         messageInput.setAttribute('type', 'text');
         messageInput.setAttribute('placeholder', 'Send message');
 
+        this.pane = messagesPane;
+        this.input = messageInput;
+
         chatFrame.appendChild(messagesPane);
         chatFrame.appendChild(messageInput);
         document.querySelector('body').appendChild(chatFrame);
     }
 
+    addEventListeners() {
+        this.connection.subscribe('chat-message', (...args) => this.newMessageEvent(...args));
+        this.input.addEventListener('keypress', (...args) => this.keyPress(...args));
+    }
+
     newMessageEvent() {
         console.log(arguments);
+    }
+
+    keyPress() {
+        console.log('keyPress', arguments);
     }
 }
 
