@@ -35,7 +35,9 @@ class Input {
         this.keyCache = {};
         this.click = null;
         document.addEventListener('keydown', (event) => {
-            this.keyCache[String.fromCharCode(event.keyCode)] = true;
+            if (!this.paused) {
+                this.keyCache[String.fromCharCode(event.keyCode)] = true;
+            }
         });
         document.addEventListener('keyup', (event) => {
             this.keyCache[String.fromCharCode(event.keyCode)] = false;
@@ -58,6 +60,14 @@ class Input {
             right: this.keyCache.D,
             primary: this.click
         };
+    }
+
+    pauseInputCapture() {
+        this.paused = true;
+    }
+
+    resumeInputCapture() {
+        this.paused = false;
     }
 }
 

@@ -1,6 +1,7 @@
 class Chat {
-    constructor(connection) {
+    constructor(connection, inputController) {
         this.connection = connection;
+        this.inputController = inputController;
 
         this.createDocumentStructure();
         this.addEventListeners();
@@ -42,11 +43,11 @@ class Chat {
     }
 
     focus(event) {
-        console.log('focus', event);
+        this.inputController.pauseInputCapture();
     }
 
     blur(event) {
-        console.log('blur', event);
+        this.inputController.resumeInputCapture();
     }
 }
 

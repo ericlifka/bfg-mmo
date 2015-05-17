@@ -19,8 +19,6 @@ class Game {
         conn.subscribe('chunk-updates', _.bind(this.chunkUpdates, this));
         conn.subscribe('ready', () => this.worldReady = true);
 
-        this.chat = new Chat(conn);
-
         this.renderLoop = new RenderLoop();
         this.renderLoop.addFrameHandler(dTime => {
             // FIXME: Temp hack to filter out an invalid state
@@ -46,6 +44,8 @@ class Game {
         this.input = new Input(this.stage);
 
         this.viewport.appendChild(this.renderer.view);
+
+        this.chat = new Chat(this.connection, this.input);
 
         this.entities = [];
         this.player = null;
