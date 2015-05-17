@@ -52,7 +52,7 @@ class Chat {
 
     keyUp(event) {
         if (event.keyCode === ESCAPE) {
-            // trigger blur
+            this.input.blur();
         }
     }
 
