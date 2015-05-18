@@ -45,6 +45,12 @@ class Chat {
         messageDiv.innerHTML = `<span class="user">${from}</span>${message}`;
 
         this.pane.appendChild(messageDiv);
+
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        this.pane.scrollTop = this.pane.scrollHeight;
     }
 
     keyPress(event) {
