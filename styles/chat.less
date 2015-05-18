@@ -4,7 +4,9 @@
     top: 0;
     height: 100%;
     width: 350px;
-    background-color: teal;
+    border-left: 1px solid #DEDEE6;
+    background-color: #fff;
+    box-shadow: 0 0 20px #D9DCEE;
 
     display: flex;
     flex-direction: column;
@@ -17,5 +19,20 @@
     .message-input {
         order: 2;
         flex-grow: 0;
+    }
+
+    .message {
+        display: flex;
+        flex-direction: row;
+
+        .user {
+            order: 1;
+            flex-grow: 0;
+        }
+
+        .content {
+            order: 2;
+            flex-grow: 1;
+        }
     }
 }
