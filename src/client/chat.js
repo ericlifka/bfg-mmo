@@ -39,11 +39,20 @@ class Chat {
         this.input.addEventListener('blur', (...args) => this.blur(...args));
     }
 
-    newMessageEvent({message}) {
+    newMessageEvent({message, from}) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
-        messageDiv.innerText = message;
 
+        const user = document.createElement('div');
+        user.classList.add('user');
+        user.innerText = from;
+
+        const content = document.createElement('div');
+        content.classList.add('content');
+        content.innerText = message;
+
+        messageDiv.appendChild(user);
+        messageDiv.appendChild(content);
         this.pane.appendChild(messageDiv);
     }
 
