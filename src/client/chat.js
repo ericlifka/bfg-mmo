@@ -39,8 +39,12 @@ class Chat {
         this.input.addEventListener('blur', (...args) => this.blur(...args));
     }
 
-    newMessageEvent() {
-        console.log(arguments);
+    newMessageEvent({message}) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.innerText = message;
+
+        this.pane.appendChild(messageDiv);
     }
 
     keyPress(event) {
