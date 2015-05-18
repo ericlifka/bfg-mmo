@@ -73,7 +73,7 @@ export default class ConnectionPool {
         });
 
         socket.on('chat-message', ({message}) => {
-            const from = socket.username;
+            const from = socket.player;
             this.server.emit('chat-message', {message, from});
         });
 
