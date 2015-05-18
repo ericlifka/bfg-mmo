@@ -73,7 +73,7 @@ export default class ConnectionPool {
         });
 
         socket.on('chat-message', (message) => {
-            console.log('chat-message', message);
+            this.server.emit('chat-message', message);
         });
 
         socket.on('disconnect', () => {
