@@ -14,6 +14,7 @@
     .messages-pane {
         order: 1;
         flex-grow: 1;
+        margin: 5px 0;
     }
 
     .message-input {
@@ -22,17 +23,13 @@
     }
 
     .message {
-        display: flex;
-        flex-direction: row;
+        padding-left: 20px;
+        line-height: 1.5;
 
         .user {
-            order: 1;
-            flex-grow: 0;
-        }
-
-        .content {
-            order: 2;
-            flex-grow: 1;
+            color: #000066;
+            font-weight: bold;
+            padding-right: 15px;
         }
     }
 }

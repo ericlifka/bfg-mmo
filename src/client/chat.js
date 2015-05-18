@@ -42,17 +42,8 @@ class Chat {
     newMessageEvent({message, from}) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
+        messageDiv.innerHTML = `<span class="user">${from}</span>${message}`;
 
-        const user = document.createElement('div');
-        user.classList.add('user');
-        user.innerText = from;
-
-        const content = document.createElement('div');
-        content.classList.add('content');
-        content.innerText = message;
-
-        messageDiv.appendChild(user);
-        messageDiv.appendChild(content);
         this.pane.appendChild(messageDiv);
     }
 
