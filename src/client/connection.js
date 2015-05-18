@@ -41,6 +41,10 @@ export default class Connection {
         });
     }
 
+    sendImmediate(type, payload) {
+        this.socket.emit(type, payload);
+    }
+
     processQueue() {
         if (this.connectionLive && this.queue.length > 0) {
             const toSend = this.queue;

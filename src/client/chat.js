@@ -32,6 +32,7 @@ class Chat {
 
     addEventListeners() {
         this.connection.subscribe('chat-message', (...args) => this.newMessageEvent(...args));
+
         this.input.addEventListener('keypress', (...args) => this.keyPress(...args));
         this.input.addEventListener('keyup', (...args) => this.keyUp(...args));
         this.input.addEventListener('focus', (...args) => this.focus(...args));
@@ -47,9 +48,9 @@ class Chat {
             event.preventDefault();
             event.stopPropagation();
 
-            const enteredText = this.input.value;
+            const message = this.input.value;
             this.input.value = "";
-            console.log(`sending: ${enteredText}`);
+            this.connection.sendImmediate('chat-message', {message});
         }
     }
 

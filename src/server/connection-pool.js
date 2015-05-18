@@ -72,6 +72,10 @@ export default class ConnectionPool {
             this.delegate.processUpdates(socket.player, updates);
         });
 
+        socket.on('chat-message', (message) => {
+            console.log('chat-message', message);
+        });
+
         socket.on('disconnect', () => {
             const player = socket.player;
             this.connections[player] = null;
