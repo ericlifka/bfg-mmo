@@ -40,9 +40,10 @@ class Chat {
     }
 
     newMessageEvent({message, from}) {
+        const classList = from === this.accountName ? 'user me' : 'user';
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
-        messageDiv.innerHTML = `<span class="user">${from}</span>${message}`;
+        messageDiv.innerHTML = `<span class="${classList}">${from}</span>${message}`;
 
         this.pane.appendChild(messageDiv);
 
