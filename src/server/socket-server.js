@@ -14,8 +14,6 @@ const game = new Game();
 connPool.setEventDelegate(game);
 game.setEmitter(connPool);
 
-socketServer.on('connection', socket => connPool.newConnection(socket));
-
 export var start = PORT => httpServer.listen(PORT, () => {
     game.startUpdateLoop();
     console.log(`listening on http://localhost:${PORT}`);

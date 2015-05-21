@@ -4,6 +4,7 @@ export default class ConnectionPool {
     constructor(server) {
         this.connections = {};
         this.server = server;
+        this.addServerListeners();
     }
 
     setEventDelegate(delegate) {
@@ -63,6 +64,10 @@ export default class ConnectionPool {
 
     sendToRoom(room, event, data) {
         this.server.to(room).emit(event, data);
+    }
+
+    addServerListeners() {
+        this.server.on('connection', socket => this.newConnection(socket));
     }
 
     addEventListeners(socket) {
