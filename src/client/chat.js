@@ -71,11 +71,11 @@ class Chat {
         }
     }
 
-    focus(event) {
+    focus() {
         this.inputController.pauseInputCapture();
     }
 
-    blur(event) {
+    blur() {
         this.inputController.resumeInputCapture();
     }
 }
