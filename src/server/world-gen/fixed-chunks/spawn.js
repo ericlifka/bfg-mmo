@@ -14,6 +14,11 @@ const Spawn = {
             .addSimpleHouse(0, 15)
             .addSimpleHouse(0, 20)
             .addSimpleHouse(0, 25)
+            .addSimpleHouse(10, 5)
+            .addSimpleHouse(10, 10)
+            .addSimpleHouse(10, 15)
+            .addSimpleHouse(10, 20)
+            .addSimpleHouse(10, 25)
             .padWithWater(10)
             .generateChunk();
     },
