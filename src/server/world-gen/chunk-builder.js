@@ -45,7 +45,11 @@ class ChunkBuilder {
         const X = x => x + left;
         const Y = y => y + top;
         const grid = (y, x) => this.grid[Y(y)][X(x)];
-        const tile = (y, x, tile) => grid(y, x).tile = tile;
+        const tile = (y, x, tile) => {
+            const g = grid(y, x);
+            g.tile = tile;
+            g.passable = false;
+        };
         let rowIndex = 0;
         const row = (...tiles) => {
             tiles.forEach((t, i) => {
