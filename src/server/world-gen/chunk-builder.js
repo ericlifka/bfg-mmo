@@ -130,7 +130,8 @@ class ChunkBuilder {
                         position: {
                             x: x * TILE_SIZE,
                             y: y * TILE_SIZE
-                        }
+                        },
+                        passable: cell.passable
                     });
                 }
             }
