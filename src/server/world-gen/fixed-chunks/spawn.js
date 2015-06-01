@@ -9,6 +9,7 @@ const Spawn = {
                 height: 20
             })
             .addCoast()
+            .grassSandPathHorizontal(10, 3, 40)
             .addSimpleHouse(0, 4)
             .addSimpleHouse(0, 9)
             .addSimpleHouse(0, 14)
